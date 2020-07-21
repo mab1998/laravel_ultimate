@@ -25,7 +25,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
 use ReCaptcha\ReCaptcha;
 use Exception;
 
@@ -57,7 +56,13 @@ class AuthController extends Controller
         ]);
 
         $check_input = $request->only('username', 'password');
-        $remember    = (Input::has('remember')) ? true : false;
+        $remember    = ($request->has('remember')) ? true : false;
+		// $fact = array(); 
+		// array_push( $fact, $remember ); 
+		// array_push( $fact, $check_input ); 
+		
+		
+		// return $fact;
 
 
         if (app_config('captcha_in_client') == '1') {
@@ -120,7 +125,7 @@ class AuthController extends Controller
     //======================================================================
     public function postVerificationToken()
     {
-        $cmd = Input::get('cmd');
+        $cmd = Request::get('cmd');
 
         if ($cmd == '') {
             return redirect('/')->with([
@@ -392,7 +397,7 @@ class AuthController extends Controller
         ]);
 
         $check_input = $request->only('username', 'password');
-        $remember    = (Input::has('remember')) ? true : false;
+        $remember    = ($request->has('remember')) ? true : false;
 
         if (app_config('captcha_in_admin') == '1') {
             if (isset($_POST['g-recaptcha-response'])) {

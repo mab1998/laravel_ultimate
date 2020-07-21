@@ -120,26 +120,26 @@ class InvoiceController extends Controller
         if ($v->fails()) {
             return redirect('invoices/add')->withInput($request->all())->withErrors($v->errors());
         }
-        $cid          = Input::get('client_id');
-        $notes        = Input::get('notes');
-        $amount       = Input::get('amount');
-        $idate        = Input::get('invoice_date');
-        $invoice_type = Input::get('invoice_type');
+        $cid          = $request->get('client_id');
+        $notes        = $request->get('notes');
+        $amount       = $request->get('amount');
+        $idate        = $request->get('invoice_date');
+        $invoice_type = $request->get('invoice_type');
 
-        $tax         = Input::get('taxed');
-        $discount    = Input::get('discount');
-        $description = Input::get('desc');
+        $tax         = $request->get('taxed');
+        $discount    = $request->get('discount');
+        $description = $request->get('desc');
 
 
         if ($invoice_type == 'recurring') {
-            $pdate = Input::get('paid_date_recurring');
+            $pdate = $request->get('paid_date_recurring');
         } else {
-            $pdate = Input::get('paid_date');
-            $ddate = Input::get('due_date');
+            $pdate = $request->get('paid_date');
+            $ddate = $request->get('due_date');
         }
 
-        $qty    = Input::get('qty');
-        $ltotal = Input::get('ltotal');
+        $qty    = $request->get('qty');
+        $ltotal = $request->get('ltotal');
 
         if ($cid == '') {
             return redirect('invoices/add')->withInput($request->all())->with(array('message' => language_data('Select a Customer'), 'message_important' => true));

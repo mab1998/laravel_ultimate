@@ -9,11 +9,16 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
+        "fx3costa/laravelchartjs": "^2.7",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
-        "laravel/tinker": "^2.0"
+        "laravel/tinker": "^2.0",
+        "laravelcollective/html": "^6.1",
+        "shamim/laravel-installer": "^1.0",
+        "yajra/laravel-datatables-oracle": "^9.10"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
@@ -39,7 +44,10 @@
         "classmap": [
             "database/seeds",
             "database/factories"
-        ]
+        ],
+      "files": [
+        "app/Helpers/helpers.php"
+      ]
     },
     "autoload-dev": {
         "psr-4": {

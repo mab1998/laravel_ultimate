@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{app_config('AppName')}} {{language_data('Login')}}</title>
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
     {!! Html::style("assets/libs/bootstrap/css/bootstrap.min.css") !!}
     {!! Html::style("assets/libs/font-awesome/css/font-awesome.min.css") !!}
