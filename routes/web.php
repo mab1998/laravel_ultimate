@@ -48,10 +48,10 @@ Route::get('permission-error','AuthController@permissionError');
 // Update Application
 //======================================================================
 
-Route::get('update','AuthController@verifyProductUpdate');
-Route::post('update/post-verify-product','AuthController@updateApplication');
-//Route::get('update','AuthController@updateApplication');
-Route::get('admin/check-available-update','AuthController@checkAvailableUpdate');
+// Route::get('update','AuthController@verifyProductUpdate');
+// Route::post('update/post-verify-product','AuthController@updateApplication');
+// //Route::get('update','AuthController@updateApplication');
+// Route::get('admin/check-available-update','AuthController@checkAvailableUpdate');
 
 
 
