@@ -167,14 +167,14 @@
 
             {{--Reports--}}
 
-            <li class="has-sub @if(Request::path()=='user/sms/history' OR Request::path()=='user/sms/view-inbox/'.view_id()) sub-open init-sub-open @endif">
+            {{-- <li class="has-sub @if(Request::path()=='user/sms/history' OR Request::path()=='user/sms/view-inbox/'.view_id()) sub-open init-sub-open @endif">
                 <a href="#"><span class="menu-text">{{language_data('Reports',Auth::guard('client')->user()->lan_id)}}</span> <span class="arrow"></span><span class="menu-thumb"><i class="fa fa-shopping-cart"></i></span></a>
                 <ul class="sub">
 
                     <li @if(Request::path()=='user/sms/history' OR Request::path()=='user/sms/view-inbox/'.view_id()) class="active" @endif><a href={{url('user/sms/history')}}><span class="menu-text">{{language_data('SMS History',Auth::guard('client')->user()->lan_id)}}</span> <span class="menu-thumb"><i class="fa fa-list"></i></span></a></li>
 
                 </ul>
-            </li>
+            </li> --}}
 
 
 
