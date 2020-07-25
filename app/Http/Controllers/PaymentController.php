@@ -17,7 +17,6 @@ use Cartalyst\Stripe\Exception\StripeException;
 use Cartalyst\Stripe\Stripe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use PayPal\Api\Amount;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
@@ -63,7 +62,7 @@ class PaymentController extends Controller
     //======================================================================
     public function payInvoice(Request $request)
     {
-        $cmd = Input::get('cmd');
+        $cmd = $request->get('cmd');
         if ($request->gateway == '') {
             return redirect('user/invoices/view/' . $cmd)->with([
                 'message' => language_data('Payment gateway required', Auth::guard('client')->user()->lan_id),
@@ -71,7 +70,7 @@ class PaymentController extends Controller
             ]);
         }
 
-        $gateway       = Input::get('gateway');
+        $gateway       = $request->get('gateway');
         $gat_info      = PaymentGateways::where('settings', $gateway)->first();
         $invoice_items = InvoiceItems::where('inv_id', $cmd)->get();
         $invoice       = Invoices::find($cmd);
@@ -721,7 +720,7 @@ class PaymentController extends Controller
 
             if ($payment_id) {
                 \Session::forget('paypal_payment_id');
-                if (empty(Input::get('PayerID')) || empty(Input::get('token'))) {
+                if (empty($request->get('PayerID')) || empty($request->get('token'))) {
                     return redirect('user/invoices/view/' . $id)->with([
                         'message' => 'Payment failed',
                         'message_important' => true
@@ -730,7 +729,7 @@ class PaymentController extends Controller
 
                 $payment   = Payment::get($payment_id, $this->_api_context);
                 $execution = new PaymentExecution();
-                $execution->setPayerId(Input::get('PayerID'));
+                $execution->setPayerId($request->get('PayerID'));
 
                 $result = $payment->execute($execution, $this->_api_context);
                 if ($result->getState() == 'approved') {
@@ -767,7 +766,7 @@ class PaymentController extends Controller
     public function payWithStripe(Request $request)
     {
 
-        $cmd      = Input::get('cmd');
+        $cmd      = $request->get('cmd');
         $invoice  = Invoices::find($cmd);
         $gat_info = PaymentGateways::where('settings', 'stripe')->first();
         $stripe   = Stripe::make($gat_info->extra_value, '2016-07-06');
@@ -828,7 +827,7 @@ class PaymentController extends Controller
     public function purchaseSMSPlanPost(Request $request)
     {
 
-        $cmd = Input::get('cmd');
+        $cmd = $request->get('cmd');
         if ($request->gateway == '') {
             return redirect('user/sms/sms-plan-feature/' . $cmd)->with([
                 'message' => language_data('Payment gateway required', Auth::guard('client')->user()->lan_id),
@@ -836,7 +835,7 @@ class PaymentController extends Controller
             ]);
         }
 
-        $gateway  = Input::get('gateway');
+        $gateway  = $request->get('gateway');
         $gat_info = PaymentGateways::where('settings', $gateway)->first();
         $sms_plan = SMSPricePlan::find($cmd);
 
@@ -1477,7 +1476,7 @@ class PaymentController extends Controller
 
                 if ($payment_id) {
                     \Session::forget('paypal_payment_id');
-                    if (empty(Input::get('PayerID')) || empty(Input::get('token'))) {
+                    if (empty($request->get('PayerID')) || empty($request->get('token'))) {
                         return redirect('user/sms/sms-plan-feature/' . $id)->with([
                             'message' => 'Payment failed',
                             'message_important' => true
@@ -1486,7 +1485,7 @@ class PaymentController extends Controller
 
                     $payment   = Payment::get($payment_id, $this->_api_context);
                     $execution = new PaymentExecution();
-                    $execution->setPayerId(Input::get('PayerID'));
+                    $execution->setPayerId($request->get('PayerID'));
 
                     $result = $payment->execute($execution, $this->_api_context);
                     if ($result->getState() == 'approved') {
@@ -1589,7 +1588,7 @@ class PaymentController extends Controller
 //======================================================================
     public function purchaseWithStripe(Request $request)
     {
-        $cmd      = Input::get('cmd');
+        $cmd      = $request->get('cmd');
         $sms_plan = SMSPricePlan::find($cmd);
 
         $get_balance = SMSPlanFeature::where('pid', $cmd)->first();
@@ -1706,7 +1705,7 @@ class PaymentController extends Controller
 
         $number_unit = $request->input('number_unit');
 
-        $gateway  = Input::get('gateway');
+        $gateway  = $request->get('gateway');
         $gat_info = PaymentGateways::where('settings', $gateway)->first();
 
         $token = date('Ymds');
@@ -2348,7 +2347,7 @@ class PaymentController extends Controller
             'pwresetexpiry' => $token
         ]);
 
-        $gateway  = Input::get('gateway');
+        $gateway  = $request->get('gateway');
         $gat_info = PaymentGateways::where('settings', $gateway)->first();
 
         if ($gateway == 'paypal') {
@@ -2979,7 +2978,7 @@ class PaymentController extends Controller
 
             if ($payment_id) {
                 \Session::forget('paypal_payment_id');
-                if (empty(Input::get('PayerID')) || empty(Input::get('token'))) {
+                if (empty($request->get('PayerID')) || empty($request->get('token'))) {
                     return redirect('user/sms/buy-unit')->with([
                         'message' => 'Payment failed',
                         'message_important' => true
@@ -2988,7 +2987,7 @@ class PaymentController extends Controller
 
                 $payment   = Payment::get($payment_id, $this->_api_context);
                 $execution = new PaymentExecution();
-                $execution->setPayerId(Input::get('PayerID'));
+                $execution->setPayerId($request->get('PayerID'));
 
                 $result = $payment->execute($execution, $this->_api_context);
                 if ($result->getState() == 'approved') {
@@ -3099,7 +3098,7 @@ class PaymentController extends Controller
     public function buyUnitWithStripe(Request $request)
     {
 
-        $cmd  = Input::get('cmd');
+        $cmd  = $request->get('cmd');
         $data = SMSBundles::where('unit_from', '<=', $cmd)->where('unit_to', '>=', $cmd)->first();
 
         if (!$data) {
@@ -4334,7 +4333,7 @@ class PaymentController extends Controller
 
             if ($payment_id) {
                 \Session::forget('paypal_payment_id');
-                if (empty(Input::get('PayerID')) || empty(Input::get('token'))) {
+                if (empty($request->get('PayerID')) || empty($request->get('token'))) {
                     return redirect('user/keywords')->with([
                         'message' => 'Payment failed',
                         'message_important' => true
@@ -4343,7 +4342,7 @@ class PaymentController extends Controller
 
                 $payment   = Payment::get($payment_id, $this->_api_context);
                 $execution = new PaymentExecution();
-                $execution->setPayerId(Input::get('PayerID'));
+                $execution->setPayerId($request->get('PayerID'));
 
                 $result = $payment->execute($execution, $this->_api_context);
                 if ($result->getState() == 'approved') {
@@ -4451,7 +4450,7 @@ class PaymentController extends Controller
     public function buyKeywordWithStripe(Request $request)
     {
 
-        $cmd     = Input::get('cmd');
+        $cmd     = $request->get('cmd');
         $keyword = Keywords::find($cmd);
 
         if (!$keyword) {

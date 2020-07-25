@@ -36,7 +36,6 @@ use App\TwoWayCommunication;
 use App\UnsubscribeLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberToCarrierMapper;
 use libphonenumber\PhoneNumberUtil;
@@ -108,7 +107,7 @@ class SMSController extends Controller
     //======================================================================
     public function postManageCoverage(Request $request)
     {
-        $cmd = Input::get('cmd');
+        $cmd = $request->get('cmd');
 
         $appStage = app_config('AppStage');
         if ($appStage == 'Demo') {
@@ -315,7 +314,7 @@ class SMSController extends Controller
             }
         }
 
-        $cmd = Input::get('cmd');
+        $cmd = $request->get('cmd');
 
         $v = \Validator::make($request->all(), [
             'client_id' => 'required', 'status' => 'required', 'sender_id' => 'required'
@@ -515,7 +514,7 @@ class SMSController extends Controller
                 ]);
             }
         }
-        $cmd = Input::get('cmd');
+        $cmd = $request->get('cmd');
         $v   = \Validator::make($request->all(), [
             'plan_name' => 'required', 'price' => 'required', 'show_in_client' => 'required'
         ]);
@@ -602,7 +601,7 @@ class SMSController extends Controller
             }
         }
 
-        $cmd = Input::get('cmd');
+        $cmd = $request->get('cmd');
         $v   = \Validator::make($request->all(), [
             'feature_name' => 'required', 'feature_value' => 'required', 'show_in_client' => 'required'
         ]);
@@ -705,7 +704,7 @@ class SMSController extends Controller
             }
         }
 
-        $cmd = Input::get('cmd');
+        $cmd = $request->get('cmd');
 
         $v = \Validator::make($request->all(), [
             'feature_name' => 'required', 'feature_value' => 'required', 'show_in_client' => 'required'
@@ -1322,7 +1321,7 @@ class SMSController extends Controller
             }
         }
 
-        $cmd = Input::get('cmd');
+        $cmd = $request->get('cmd');
 
         $v = \Validator::make($request->all(), [
             'gateway_name' => 'required', 'gateway_link' => 'required', 'status' => 'required', 'destination_param' => 'required', 'message_param' => 'required', 'username_param' => 'required', 'username_value' => 'required', 'schedule' => 'required', 'two_way' => 'required'
@@ -1464,7 +1463,7 @@ class SMSController extends Controller
             }
         }
 
-        $cmd = Input::get('cmd');
+        $cmd = $request->get('cmd');
 
         $appStage = app_config('AppStage');
         if ($appStage == 'Demo') {
@@ -1874,7 +1873,7 @@ class SMSController extends Controller
                     $destinationPath = public_path() . '/assets/mms_file/';
                     $image_name      = $image->getClientOriginalName();
                     $image_name      = str_replace(" ", "-", $image_name);
-                    Input::file('image')->move($destinationPath, $image_name);
+                    $request->file('image')->move($destinationPath, $image_name);
                     $media_url = asset('assets/mms_file/' . $image_name);
 
                 } else {
@@ -2335,7 +2334,7 @@ class SMSController extends Controller
                     $destinationPath = public_path() . '/assets/mms_file/';
                     $image_name      = $image->getClientOriginalName();
                     $image_name      = str_replace(" ", "-", $image_name);
-                    Input::file('image')->move($destinationPath, $image_name);
+                    $request->file('image')->move($destinationPath, $image_name);
                     $media_url = asset('assets/mms_file/' . $image_name);
 
                 } else {
@@ -2362,7 +2361,7 @@ class SMSController extends Controller
         }
 
 
-        $file_extension = Input::file('import_numbers')->getClientOriginalExtension();
+        $file_extension = $request->file('import_numbers')->getClientOriginalExtension();
 
         $supportedExt = array('csv', 'xls', 'xlsx');
 
@@ -2998,7 +2997,7 @@ class SMSController extends Controller
             }
         }
 
-        $cmd = Input::get('cmd');
+        $cmd = $request->get('cmd');
 
         $v = \Validator::make($request->all(), [
             'template_name' => 'required', 'message' => 'required', 'status' => 'required'
@@ -3219,10 +3218,10 @@ class SMSController extends Controller
             return redirect('sms/price-bundles')->withErrors($v->errors());
         }
 
-        $unit_from = Input::get('unit_from');
-        $unit_to   = Input::get('unit_to');
-        $price     = Input::get('price');
-        $trans_fee = Input::get('trans_fee');
+        $unit_from = $request->get('unit_from');
+        $unit_to   = $request->get('unit_to');
+        $price     = $request->get('price');
+        $trans_fee = $request->get('trans_fee');
 
         SMSBundles::truncate();
 
@@ -3675,7 +3674,7 @@ class SMSController extends Controller
                             $destinationPath = public_path() . '/assets/mms_file/';
                             $image_name      = $image->getClientOriginalName();
                             $image_name      = str_replace(" ", "-", $image_name);
-                            Input::file('image')->move($destinationPath, $image_name);
+                            $request->file('image')->move($destinationPath, $image_name);
                             $media_url = asset('assets/mms_file/' . $image_name);
 
                         } else {
@@ -4569,7 +4568,7 @@ class SMSController extends Controller
                     $destinationPath = public_path() . '/assets/mms_file/';
                     $image_name      = $image->getClientOriginalName();
                     $image_name      = str_replace(" ", "-", $image_name);
-                    Input::file('image')->move($destinationPath, $image_name);
+                    $request->file('image')->move($destinationPath, $image_name);
                     $media_url = asset('assets/mms_file/' . $image_name);
 
                 } else {
@@ -5550,7 +5549,7 @@ class SMSController extends Controller
                     $destinationPath = public_path() . '/assets/mms_file/';
                     $image_name      = $image->getClientOriginalName();
                     $image_name      = str_replace(" ", "-", $image_name);
-                    Input::file('image')->move($destinationPath, $image_name);
+                    $request->file('image')->move($destinationPath, $image_name);
                     $media_url = asset('assets/mms_file/' . $image_name);
 
                 } else {
@@ -5577,7 +5576,7 @@ class SMSController extends Controller
         }
 
 
-        $file_extension = Input::file('import_numbers')->getClientOriginalExtension();
+        $file_extension = $request->file('import_numbers')->getClientOriginalExtension();
 
         $supportedExt = array('csv', 'xls', 'xlsx');
 
@@ -5944,7 +5943,7 @@ class SMSController extends Controller
                     $destinationPath = public_path() . '/assets/mms_file/';
                     $image_name      = $image->getClientOriginalName();
                     $image_name      = str_replace(" ", "-", $image_name);
-                    Input::file('reply_mms')->move($destinationPath, $image_name);
+                    $request->file('reply_mms')->move($destinationPath, $image_name);
                     $media_url = asset('assets/mms_file/' . $image_name);
 
                 } else {
@@ -6136,7 +6135,7 @@ class SMSController extends Controller
                     $destinationPath = public_path() . '/assets/mms_file/';
                     $image_name      = $image->getClientOriginalName();
                     $image_name      = str_replace(" ", "-", $image_name);
-                    Input::file('reply_mms')->move($destinationPath, $image_name);
+                    $request->file('reply_mms')->move($destinationPath, $image_name);
                     $media_url = asset('assets/mms_file/' . $image_name);
 
                 } else {
@@ -6549,7 +6548,7 @@ class SMSController extends Controller
                             $destinationPath = public_path() . '/assets/mms_file/';
                             $image_name      = $image->getClientOriginalName();
                             $image_name      = str_replace(" ", "-", $image_name);
-                            Input::file('image')->move($destinationPath, $image_name);
+                            $request->file('image')->move($destinationPath, $image_name);
                             $media_url = asset('assets/mms_file/' . $image_name);
 
                         } else {

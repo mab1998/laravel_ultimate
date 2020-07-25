@@ -168,7 +168,9 @@ return [
 		Collective\Html\HtmlServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
 		Shamim\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
-		        Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class,
+		 Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class,
+		  Unicodeveloper\Paystack\PaystackServiceProvider::class,
+
 
 
 
@@ -240,6 +242,8 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
 		'Datatables' => Yajra\Datatables\Facades\Datatables::class,
 		'Input' => Illuminate\Support\Facades\Request::class,
+		'Paystack' => Unicodeveloper\Paystack\Facades\Paystack::class,
+
 
 
     ],
