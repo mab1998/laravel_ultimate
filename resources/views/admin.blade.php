@@ -105,7 +105,7 @@
 
 
             {{--Keywords--}}
-            <li class="has-sub @if(Request::path()== 'keywords/all' OR Request::path()=='keywords/add' OR Request::path()=='keywords/view/'.view_id() OR Request::path()=='keywords/settings') sub-open init-sub-open @endif">
+            {{-- <li class="has-sub @if(Request::path()== 'keywords/all' OR Request::path()=='keywords/add' OR Request::path()=='keywords/view/'.view_id() OR Request::path()=='keywords/settings') sub-open init-sub-open @endif">
                 <a href="#"><span class="menu-text">{{language_data('Keywords')}}</span> <span
                             class="arrow"></span><span class="menu-thumb"><i class="fa fa-keyboard-o"></i></span></a>
                 <ul class="sub">
@@ -126,12 +126,12 @@
                                     class="menu-thumb"><i class="fa fa-cog"></i></span></a></li>
 
                 </ul>
-            </li>
+            </li> --}}
 
 
 
                 {{--Contacts--}}
-                <li class="has-sub @if(Request::path()== 'sms/phone-book' OR Request::path()== 'sms/import-contacts' OR Request::path()== 'sms/view-contact/'.view_id() OR Request::path()== 'sms/blacklist-contacts' OR Request::path()== 'sms/add-contact/'.view_id() OR Request::path()== 'sms/edit-contact/'.view_id() OR Request::path()== 'sms/spam-words') sub-open init-sub-open @endif">
+                {{-- <li class="has-sub @if(Request::path()== 'sms/phone-book' OR Request::path()== 'sms/import-contacts' OR Request::path()== 'sms/view-contact/'.view_id() OR Request::path()== 'sms/blacklist-contacts' OR Request::path()== 'sms/add-contact/'.view_id() OR Request::path()== 'sms/edit-contact/'.view_id() OR Request::path()== 'sms/spam-words') sub-open init-sub-open @endif">
                     <a href="#"><span class="menu-text">{{language_data('Contacts')}}</span> <span
                                 class="arrow"></span><span class="menu-thumb"><i class="fa fa-book"></i></span></a>
                     <ul class="sub">
@@ -157,15 +157,15 @@
                                         class="menu-thumb"><i class="fa fa-stop"></i></span></a></li>
 
                     </ul>
-                </li>
+                </li> --}}
 
 
-
+{{-- 
                 <li @if(Request::path()=='sms/coverage' OR Request::path()=='sms/manage-coverage/'.view_id() OR Request::path()=='sms/add-operator/'.view_id() OR Request::path()=='sms/view-operator/'.view_id() OR Request::path()=='sms/manage-operator/'.view_id()) class="active" @endif>
                     <a href={{url('sms/coverage')}}><span class="menu-text">{{language_data('Coverage')}}
                             / {{language_data('Routing')}}</span> <span class="menu-thumb"><i
                                     class="fa fa-wifi"></i></span></a>
-                </li>
+                </li> --}}
 
 
 
@@ -199,7 +199,7 @@
 
 
                 {{--Bulk SMS--}}
-                <li class="has-sub @if(Request::path()== 'sms/quick-sms'OR Request::path()== 'sms/send-sms' OR Request::path()=='sms/send-sms-file' OR Request::path()=='sms/send-schedule-sms' OR Request::path()=='sms/send-schedule-sms-file' OR Request::path()== 'sms/update-schedule-sms' OR Request::path()=='sms/manage-update-schedule-sms/'.view_id() OR Request::path()== 'sms/campaign-reports' OR Request::path()=='sms/manage-campaign/'.view_id()) sub-open init-sub-open @endif">
+                {{-- <li class="has-sub @if(Request::path()== 'sms/quick-sms'OR Request::path()== 'sms/send-sms' OR Request::path()=='sms/send-sms-file' OR Request::path()=='sms/send-schedule-sms' OR Request::path()=='sms/send-schedule-sms-file' OR Request::path()== 'sms/update-schedule-sms' OR Request::path()=='sms/manage-update-schedule-sms/'.view_id() OR Request::path()== 'sms/campaign-reports' OR Request::path()=='sms/manage-campaign/'.view_id()) sub-open init-sub-open @endif">
                     <a href="#"><span class="menu-text">{{language_data('Bulk SMS')}}</span> <span
                                 class="arrow"></span><span class="menu-thumb"><i class="fa fa-mobile"></i></span></a>
                     <ul class="sub">
@@ -237,48 +237,16 @@
 
 
                     </ul>
-                </li>
+                </li> --}}
 
 
 
                 {{--Recurring SMS--}}
-                <li class="has-sub @if(Request::path()== 'sms/recurring-sms' OR Request::path()== 'sms/send-recurring-sms' OR Request::path()== 'sms/send-recurring-sms-file' OR Request::path()== 'sms/update-recurring-sms/'.view_id() OR Request::path()== 'sms/add-recurring-sms-contact/'.view_id() OR Request::path()== 'sms/update-recurring-sms-contact/'.view_id() OR Request::path()== 'sms/update-recurring-sms-contact-data/'.view_id()) sub-open init-sub-open @endif">
-                    <a href="#"><span class="menu-text">{{language_data('Recurring SMS')}}</span> <span
-                                class="arrow"></span><span class="menu-thumb"><i class="fa fa-clock-o"></i></span></a>
-                    <ul class="sub">
-
-                        <li @if(Request::path()== 'sms/recurring-sms'  OR Request::path()== 'sms/update-recurring-sms/'.view_id() OR Request::path()== 'sms/add-recurring-sms-contact/'.view_id() OR Request::path()== 'sms/update-recurring-sms-contact/'.view_id() OR Request::path()== 'sms/update-recurring-sms-contact-data/'.view_id()) class="active" @endif>
-                            <a href={{url('sms/recurring-sms')}}><span
-                                        class="menu-text">{{language_data('All')}} {{language_data('Recurring SMS')}}</span>
-                                <span class="menu-thumb"><i class="fa fa-list"></i></span></a></li>
-
-                        <li @if(Request::path()== 'sms/send-recurring-sms') class="active" @endif><a
-                                    href={{url('sms/send-recurring-sms')}}><span
-                                        class="menu-text">{{language_data('Send')}} {{language_data('Recurring SMS')}}</span>
-                                <span class="menu-thumb"><i class="fa fa-send"></i></span></a></li>
-
-                        <li @if(Request::path()== 'sms/send-recurring-sms-file') class="active" @endif><a
-                                    href={{url('sms/send-recurring-sms-file')}}><span
-                                        class="menu-text">{{language_data('Send Recurring SMS File')}}</span> <span
-                                        class="menu-thumb"><i class="fa fa-file-text"></i></span></a></li>
-
-                    </ul>
-                </li>
-
-
-            <li @if(Request::path()== 'sms/sender-id-management' OR Request::path()=='sms/add-sender-id' OR Request::path()=='sms/view-sender-id/'.view_id()) class="active" @endif>
-                <a href={{url('sms/sender-id-management')}}><span
-                            class="menu-text">{{language_data('Sender ID Management')}}</span> <span class="menu-thumb"><i
-                                class="fa fa-user-secret"></i></span></a></li>
-
-
-            <li @if(Request::path()=='sms/sms-templates' OR Request::path()=='sms/create-sms-template' OR Request::path()=='sms/manage-sms-template/'.view_id()) class="active" @endif>
-                <a href={{url('sms/sms-templates')}}><span class="menu-text">{{language_data('SMS Templates')}}</span>
-                    <span class="menu-thumb"><i class="fa fa-file-code-o"></i></span></a></li>
+                {{-- <li class="hasenu-thumb"><i class="fa fa-file-code-o"></i></span></a></li> --}}
 
 
             {{--SMS Gateways--}}
-            <li class="has-sub @if(Request::path()== 'sms/http-sms-gateway' OR Request::path()=='sms/smpp-sms-gateway' OR Request::path()=='sms/add-sms-gateways' OR Request::path()=='sms/gateway-manage/'.view_id() OR Request::path()=='sms/custom-gateway-manage/'.view_id() OR Request::path()=='sms/add-smpp-sms-gateways' OR Request::path()=='sms/smpp-gateway-manage/'.view_id()) sub-open init-sub-open @endif">
+            {{-- <li class="has-sub @if(Request::path()== 'sms/http-sms-gateway' OR Request::path()=='sms/smpp-sms-gateway' OR Request::path()=='sms/add-sms-gateways' OR Request::path()=='sms/gateway-manage/'.view_id() OR Request::path()=='sms/custom-gateway-manage/'.view_id() OR Request::path()=='sms/add-smpp-sms-gateways' OR Request::path()=='sms/smpp-gateway-manage/'.view_id()) sub-open init-sub-open @endif">
                 <a href="#"><span class="menu-text">{{language_data('SMS Gateway')}}</span> <span
                             class="arrow"></span><span class="menu-thumb"><i class="fa fa-server"></i></span></a>
                 <ul class="sub">
@@ -301,11 +269,11 @@
             <li @if(Request::path()=='sms/chat-box') class="active" @endif><a href={{url('sms/chat-box')}}><span class="menu-text">{{language_data('Chat SMS')}}</span>
                     <span class="menu-thumb"><i class="fa fa-comments"></i></span>
                 </a>
-            </li>
+            </li> --}}
 
 
             {{--History--}}
-            <li class="has-sub @if(Request::path()=='sms/history' OR Request::path()=='sms/view-inbox/'.view_id() OR Request::path()=='sms/reports/download' OR Request::path()=='sms/reports/delete' OR Request::path()=='sms/block-message' OR Request::path()=='sms/view-block-message/'.view_id()) sub-open init-sub-open @endif">
+            {{-- <li class="has-sub @if(Request::path()=='sms/history' OR Request::path()=='sms/view-inbox/'.view_id() OR Request::path()=='sms/reports/download' OR Request::path()=='sms/reports/delete' OR Request::path()=='sms/block-message' OR Request::path()=='sms/view-block-message/'.view_id()) sub-open init-sub-open @endif">
                 <a href="#"><span class="menu-text">{{language_data('Reports')}}</span> <span class="arrow"></span><span
                             class="menu-thumb"><i class="fa fa-list"></i></span></a>
                 <ul class="sub">
@@ -321,7 +289,7 @@
                                     class="menu-thumb"><i class="fa fa-remove"></i></span></a></li>
 
                 </ul>
-            </li>
+            </li> --}}
 
             {{--SMS API--}}
             <li class="has-sub @if(Request::path()== 'sms-api/info' OR Request::path()== 'sms-api/sdk') sub-open init-sub-open @endif">
@@ -366,7 +334,7 @@
 
 
             {{--Administrators--}}
-            <li class="has-sub @if(Request::path()== 'administrators/all' OR Request::path()=='administrators/manage/'.view_id() OR Request::path()=='administrators/role' OR Request::path()=='administrators/set-role/'.view_id()) sub-open init-sub-open @endif">
+            {{-- <li class="has-sub @if(Request::path()== 'administrators/all' OR Request::path()=='administrators/manage/'.view_id() OR Request::path()=='administrators/role' OR Request::path()=='administrators/set-role/'.view_id()) sub-open init-sub-open @endif">
                 <a href="#"><span class="menu-text">{{language_data('Administrators')}}</span> <span
                             class="arrow"></span><span class="menu-thumb"><i class="fa fa-user"></i></span></a>
                 <ul class="sub">
@@ -381,7 +349,7 @@
                                     class="menu-thumb"><i class="fa fa-user-secret"></i></span></a></li>
 
                 </ul>
-            </li>
+            </li> --}}
 
 
             {{--Setting--}}
@@ -396,45 +364,45 @@
                                     class="menu-thumb"><i class="fa fa-cog"></i></span></a></li>
 
 
-                    <li @if(Request::path()== 'settings/localization') class="active" @endif><a
+                    {{-- <li @if(Request::path()== 'settings/localization') class="active" @endif><a
                                 href={{url('settings/localization')}}><span
                                     class="menu-text">{{language_data('Localization')}}</span> <span class="menu-thumb"><i
-                                        class="fa fa-globe"></i></span></a></li>
+                                        class="fa fa-globe"></i></span></a></li> --}}
 
 
-                    <li @if(Request::path()== 'settings/language-settings' OR Request::path()=='settings/language-settings-manage/'.view_id() OR Request::path()=='settings/language-settings-translate/'.view_id()) class="active" @endif>
+                    {{-- <li @if(Request::path()== 'settings/language-settings' OR Request::path()=='settings/language-settings-manage/'.view_id() OR Request::path()=='settings/language-settings-translate/'.view_id()) class="active" @endif>
                         <a href={{url('settings/language-settings')}}><span
                                     class="menu-text">{{language_data('Language Settings')}}</span> <span
-                                    class="menu-thumb"><i class="fa fa-language"></i></span></a></li>
+                                    class="menu-thumb"><i class="fa fa-language"></i></span></a></li> --}}
 
                     <li @if(Request::path()=='settings/payment-gateways' OR Request::path()=='settings/payment-gateway-manage/'.view_id()) class="active" @endif>
                         <a href={{url('settings/payment-gateways')}}><span
                                     class="menu-text">{{language_data('Payment Gateways')}}</span> <span
                                     class="menu-thumb"><i class="fa fa-paypal"></i></span></a></li>
 
-                    <li @if(Request::path()=='settings/background-jobs') class="active" @endif><a
+                    {{-- <li @if(Request::path()=='settings/background-jobs') class="active" @endif><a
                                 href={{url('settings/background-jobs')}}><span
                                     class="menu-text">{{language_data('Background Jobs')}}</span> <span
-                                    class="menu-thumb"><i class="fa fa-clock-o"></i></span></a></li>
+                                    class="menu-thumb"><i class="fa fa-clock-o"></i></span></a></li> --}}
 
-                    @if(app_config('AppStage') != 'Demo' && Auth::user()->username == 'admin')
+                    {{-- @if(app_config('AppStage') != 'Demo' && Auth::user()->username == 'admin')
                         <li @if(Request::path()=='settings/purchase-code') class="active" @endif><a
                                     href={{url('settings/purchase-code')}}><span
                                         class="menu-text">{{language_data('Purchase Code')}}</span> <span
                                         class="menu-thumb"><i class="fa fa-key"></i></span></a></li>
-                    @endif
+                    @endif --}}
 
                 </ul>
             </li>
 
             {{--Update Application--}}
 
-            @if(app_config('AppStage') != 'Demo' && Auth::user()->username == 'admin')
+            {{-- @if(app_config('AppStage') != 'Demo' && Auth::user()->username == 'admin')
                 <li @if(Request::path()== 'admin/update-application') class="active" @endif><a
                             href="{{url('admin/update-application')}}"><span
                                 class="menu-text">{{language_data('Update Application')}}</span> <span
                                 class="menu-thumb"><i class="fa fa-upload"></i></span></a></li>
-            @endif
+            @endif --}}
 
 
             {{--Logout--}}
