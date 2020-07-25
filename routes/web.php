@@ -96,8 +96,8 @@ Route::get('admin/logout', 'DashboardController@logout');
 //======================================================================
 // Update Application (Version 2.3)
 //======================================================================
-Route::get('admin/update-application', 'DashboardController@updateApplication');
-Route::post('admin/post-update-application', 'DashboardController@postUpdateApplication');
+// Route::get('admin/update-application', 'DashboardController@updateApplication');
+// Route::post('admin/post-update-application', 'DashboardController@postUpdateApplication');
 Route::get('admin/backup-database', 'DashboardController@backupDatabase');
 
 /*

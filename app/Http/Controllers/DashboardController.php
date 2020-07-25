@@ -401,18 +401,7 @@ class DashboardController extends Controller
     //======================================================================
     // updateApplication Function Start Here
     //======================================================================
-    public function updateApplication()
-    {
-        $appStage = app_config('AppStage');
-        if ($appStage == 'Demo') {
-            return redirect('dashboard')->with([
-                'message' => language_data('This Option is Disable In Demo Mode'),
-                'message_important' => true
-            ]);
-        }
 
-        return view('admin.update-application');
-    }
 
     //======================================================================
     // backupDatabase Function Start Here
@@ -454,72 +443,3 @@ class DashboardController extends Controller
     //======================================================================
     // postUpdateApplication Function Start Here
     //======================================================================
-    public function postUpdateApplication(Request $request)
-    {
-        $appStage = app_config('AppStage');
-        if ($appStage == 'Demo') {
-            return redirect('dashboard')->with([
-                'message' => language_data('This Option is Disable In Demo Mode'),
-                'message_important' => true
-            ]);
-        }
-
-        $v = \Validator::make($request->all(), [
-            'update_file' => 'required'
-        ]);
-
-        if ($v->fails()) {
-            return redirect('admin/update-application')->withErrors($v->errors());
-        }
-
-        $update_file   = Input::file('update_file');
-        $get_extension = $update_file->getClientOriginalExtension();
-
-        if ($get_extension !== 'zip') {
-            return redirect('admin/update-application')->with([
-                'message' => 'Invalid file type',
-                'message_important' => true
-            ]);
-        }
-
-
-        if (!class_exists('ZipArchive')) {
-            return redirect('admin/update-application')->with([
-                'message' => 'Your PHP version does not support unzip functionality',
-                'message_important' => true
-            ]);
-        }
-
-        $zip = new \ZipArchive();
-
-        // Check if archive is readable.
-        if ($zip->open($update_file) === TRUE) {
-            // Check if destination is writable
-            if (is_writeable(base_path() . '/')) {
-                $zip->extractTo(base_path());
-                $zip->close();
-
-                Auth::logout();
-
-                return redirect('admin')->with([
-                    'message' => 'Application updated successfully. Please login with your admin access'
-                ]);
-
-            } else {
-                return redirect('admin/update-application')->with([
-                    'message' => 'Directory not writeable by webserver. Please set write permission of you installation folder',
-                    'message_important' => true
-                ]);
-            }
-        } else {
-            return redirect('admin/update-application')->with([
-                'message' => 'Cannot read .zip archive. Please try again',
-                'message_important' => true
-            ]);
-
-        }
-
-    }
-
-
-}
