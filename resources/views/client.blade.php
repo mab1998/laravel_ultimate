@@ -80,12 +80,12 @@
                 </ul>
             </li>
 
-            <li @if(Request::path()== 'user/coverage' OR Request::path()== 'user/sms/view-operator/'.view_id()) class="active" @endif><a href="{{url('user/coverage')}}"><span class="menu-text">{{language_data('Coverage',Auth::guard('client')->user()->lan_id)}} / {{language_data('Routing',Auth::guard('client')->user()->lan_id)}}</span> <span class="menu-thumb"><i class="fa fa-wifi"></i></span></a></li>
+            {{-- <li @if(Request::path()== 'user/coverage' OR Request::path()== 'user/sms/view-operator/'.view_id()) class="active" @endif><a href="{{url('user/coverage')}}"><span class="menu-text">{{language_data('Coverage',Auth::guard('client')->user()->lan_id)}} / {{language_data('Routing',Auth::guard('client')->user()->lan_id)}}</span> <span class="menu-thumb"><i class="fa fa-wifi"></i></span></a></li> --}}
 
             {{--Version 2.0--}}
             {{--Contacts--}}
 
-            <li class="has-sub @if(Request::path()== 'user/phone-book' OR Request::path()== 'user/sms/import-contacts' OR Request::path()== 'user/add-contact/'.view_id()  OR Request::path()== 'user/view-contact/'.view_id()  OR Request::path()== 'user/sms/blacklist-contacts' OR Request::path()== 'user/edit-contact/'.view_id()) sub-open init-sub-open @endif">
+            {{-- <li class="has-sub @if(Request::path()== 'user/phone-book' OR Request::path()== 'user/sms/import-contacts' OR Request::path()== 'user/add-contact/'.view_id()  OR Request::path()== 'user/view-contact/'.view_id()  OR Request::path()== 'user/sms/blacklist-contacts' OR Request::path()== 'user/edit-contact/'.view_id()) sub-open init-sub-open @endif">
                 <a href="#"><span class="menu-text">{{language_data('Contacts',Auth::guard('client')->user()->lan_id)}}</span> <span class="arrow"></span><span class="menu-thumb"><i class="fa fa-book"></i></span></a>
                 <ul class="sub">
 
@@ -96,7 +96,7 @@
                     <li @if(Request::path()== 'user/sms/blacklist-contacts') class="active" @endif><a href={{url('user/sms/blacklist-contacts')}}><span class="menu-text"> {{language_data('Blacklist Contacts',Auth::guard('client')->user()->lan_id)}}</span> <span class="menu-thumb"><i class="fa fa-remove"></i></span></a></li>
 
                 </ul>
-            </li>
+            </li> --}}
 
             {{--Recharge--}}
 
@@ -112,12 +112,12 @@
             </li>
 
 
-            @if(app_config('show_keyword_in_client') == 1)
+            {{-- @if(app_config('show_keyword_in_client') == 1)
                 <li @if(Request::path()== 'user/keywords' OR Request::path()== 'user/keywords/purchase/'.view_id() OR Request::path()== 'user/keywords/view/'.view_id()) class="active" @endif><a href="{{url('user/keywords')}}"><span class="menu-text">{{language_data('Keywords',Auth::guard('client')->user()->lan_id)}}</span> <span class="menu-thumb"><i class="fa fa-keyboard-o"></i></span></a></li>
-            @endif
+            @endif --}}
 
             {{--Bulk SMS--}}
-            <li class="has-sub @if(Request::path()== 'user/sms/quick-sms' OR Request::path()== 'user/sms/send-sms' OR Request::path()=='user/sms/send-sms-file' OR Request::path()=='user/sms/send-schedule-sms' OR Request::path()=='user/sms/send-schedule-sms-file' OR Request::path()== 'user/sms/update-schedule-sms' OR Request::path()=='user/sms/manage-update-schedule-sms/'.view_id() OR Request::path()== 'user/sms/campaign-reports' OR Request::path()=='user/sms/manage-campaign/'.view_id()) sub-open init-sub-open @endif">
+            {{-- <li class="has-sub @if(Request::path()== 'user/sms/quick-sms' OR Request::path()== 'user/sms/send-sms' OR Request::path()=='user/sms/send-sms-file' OR Request::path()=='user/sms/send-schedule-sms' OR Request::path()=='user/sms/send-schedule-sms-file' OR Request::path()== 'user/sms/update-schedule-sms' OR Request::path()=='user/sms/manage-update-schedule-sms/'.view_id() OR Request::path()== 'user/sms/campaign-reports' OR Request::path()=='user/sms/manage-campaign/'.view_id()) sub-open init-sub-open @endif">
                 <a href="#"><span class="menu-text">{{language_data('Bulk SMS',Auth::guard('client')->user()->lan_id)}}</span> <span class="arrow"></span><span class="menu-thumb"><i class="fa fa-mobile"></i></span></a>
                 <ul class="sub">
 
@@ -136,12 +136,12 @@
                     <li @if(Request::path()== 'user/sms/campaign-reports' OR Request::path()=='user/sms/manage-campaign/'.view_id() OR Request::path()=='user/sms/manage-update-schedule-sms/'.view_id()) class="active" @endif><a href={{url('user/sms/campaign-reports')}}><span class="menu-text">{{language_data('Campaign Reports',Auth::guard('client')->user()->lan_id)}}</span> <span class="menu-thumb"><i class="fa fa-line-chart"></i></span></a></li>
 
                 </ul>
-            </li>
+            </li> --}}
 
 
 
             {{--Recurring SMS--}}
-            <li class="has-sub @if(Request::path()== 'user/sms/recurring-sms' OR Request::path()== 'user/sms/send-recurring-sms' OR Request::path()== 'user/sms/send-recurring-sms-file' OR Request::path()== 'user/sms/update-recurring-sms/'.view_id() OR Request::path()== 'user/sms/add-recurring-sms-contact/'.view_id() OR Request::path()== 'user/sms/update-recurring-sms-contact/'.view_id() OR Request::path()== 'user/sms/update-recurring-sms-contact-data/'.view_id()) sub-open init-sub-open @endif">
+            {{-- <li class="has-sub @if(Request::path()== 'user/sms/recurring-sms' OR Request::path()== 'user/sms/send-recurring-sms' OR Request::path()== 'user/sms/send-recurring-sms-file' OR Request::path()== 'user/sms/update-recurring-sms/'.view_id() OR Request::path()== 'user/sms/add-recurring-sms-contact/'.view_id() OR Request::path()== 'user/sms/update-recurring-sms-contact/'.view_id() OR Request::path()== 'user/sms/update-recurring-sms-contact-data/'.view_id()) sub-open init-sub-open @endif">
                 <a href="#"><span class="menu-text">{{language_data('Recurring SMS',Auth::guard('client')->user()->lan_id)}}</span> <span class="arrow"></span><span class="menu-thumb"><i class="fa fa-clock-o"></i></span></a>
                 <ul class="sub">
 
@@ -152,18 +152,18 @@
                     <li @if(Request::path()== 'user/sms/send-recurring-sms-file') class="active" @endif><a href={{url('user/sms/send-recurring-sms-file')}}><span class="menu-text">{{language_data('Send Recurring SMS File',Auth::guard('client')->user()->lan_id)}}</span> <span class="menu-thumb"><i class="fa fa-file-text"></i></span></a></li>
 
                 </ul>
-            </li>
+            </li> --}}
 
 
-            <li @if(Request::path()== 'user/sms/sender-id-management' OR Request::path()=='user/sms/add-sender-id' OR Request::path()=='user/sms/view-sender-id/'.view_id()) class="active" @endif><a href={{url('user/sms/sender-id-management')}}><span class="menu-text">{{language_data('Sender ID Management',Auth::guard('client')->user()->lan_id)}}</span> <span class="menu-thumb"><i class="fa fa-user-secret"></i></span></a></li>
+            {{-- <li @if(Request::path()== 'user/sms/sender-id-management' OR Request::path()=='user/sms/add-sender-id' OR Request::path()=='user/sms/view-sender-id/'.view_id()) class="active" @endif><a href={{url('user/sms/sender-id-management')}}><span class="menu-text">{{language_data('Sender ID Management',Auth::guard('client')->user()->lan_id)}}</span> <span class="menu-thumb"><i class="fa fa-user-secret"></i></span></a></li> --}}
 
 
-            <li @if(Request::path()=='user/sms/sms-templates' OR Request::path()=='user/sms/create-sms-template' OR Request::path()=='user/sms/manage-sms-template/'.view_id()) class="active" @endif><a href={{url('user/sms/sms-templates')}}><span class="menu-text">{{language_data('SMS Templates',Auth::guard('client')->user()->lan_id)}}</span> <span class="menu-thumb"><i class="fa fa-file-code-o"></i></span></a></li>
+            {{-- <li @if(Request::path()=='user/sms/sms-templates' OR Request::path()=='user/sms/create-sms-template' OR Request::path()=='user/sms/manage-sms-template/'.view_id()) class="active" @endif><a href={{url('user/sms/sms-templates')}}><span class="menu-text">{{language_data('SMS Templates',Auth::guard('client')->user()->lan_id)}}</span> <span class="menu-thumb"><i class="fa fa-file-code-o"></i></span></a></li> --}}
 
-            <li @if(Request::path()=='user/sms/chat-box') class="active" @endif><a href={{url('user/sms/chat-box')}}><span class="menu-text">{{language_data('Chat SMS',Auth::guard('client')->user()->lan_id)}}</span>
+            {{-- <li @if(Request::path()=='user/sms/chat-box') class="active" @endif><a href={{url('user/sms/chat-box')}}><span class="menu-text">{{language_data('Chat SMS',Auth::guard('client')->user()->lan_id)}}</span>
                     <span class="menu-thumb"><i class="fa fa-comments"></i></span>
                 </a>
-            </li>
+            </li> --}}
 
             {{--Reports--}}
 
