@@ -43,7 +43,7 @@ class AuthController extends Controller
             return redirect('dashboard');
         }
 
-        return view('client.login');
+        return view('client.login2');
     }
 
     //======================================================================
@@ -200,7 +200,7 @@ class AuthController extends Controller
     //======================================================================
     public function forgotUserPassword()
     {
-        return view('client.forgot-password');
+        return view('client.login2');
     }
 
 
@@ -217,7 +217,7 @@ class AuthController extends Controller
             ]);
         }
 
-        return view('client.registration');
+        return view('client.login2');
 
     }
 

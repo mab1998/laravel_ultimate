@@ -10,6 +10,12 @@ use App\LanguageData;
 use App\Language;
 use App\SMSGateways;
 
+function check_if_exist($DomainName)
+{
+    $cart = session()->get('cart');
+    return isset($cart[$DomainName]);
+
+}
 function app_config($value = '')
 {
     $conf = AppConfig::where('setting', '=', $value)->first();

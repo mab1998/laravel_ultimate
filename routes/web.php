@@ -34,6 +34,41 @@ Route::get('admin/forgot-password', 'AuthController@forgotPassword');
 Route::post('admin/forgot-password-token', 'AuthController@forgotPasswordToken');
 Route::get('admin/forgot-password-token-code/{token}', 'AuthController@forgotPasswordTokenCode');
 
+//======================================================================
+// Client proxy setting
+//======================================================================
+
+Route::get('user/proxy-setting', 'UserProxyController@getProxies');
+Route::post('sms/post-sms-bundles','SMSController@postPriceBundles');
+
+//======================================================================
+// Domain Regestration
+//======================================================================
+Route::get('registrars', 'DomainController@get_provider');
+Route::post('update-registrar', 'DomainController@update_provider');
+
+Route::get('searche-domain/{domain}', 'DomainController@search_domain');
+
+Route::get('purchase-domain', 'DomainController@post_provider');
+
+Route::get('domain', 'DomainController@SearchDomain');
+
+Route::post('domain', 'DomainController@post_search_domain');
+
+Route::get('domain-add-to-card/{domain}', 'DomainController@DomainAddToCard');
+
+Route::get('remove-domain-from-card/{domain}', 'DomainController@DomainRemoveFromCard');
+
+Route::get('ssh', 'DomainController@ssh');
+
+//======================================================================
+// Server
+//======================================================================
+Route::get('server', 'ServersController@index');
+Route::get('server-create', 'ServersController@CreatNewServer');
+Route::post('server-create', 'ServersController@CreatNewServer_Post');
+
+
 
 //======================================================================
 // Permission Check
@@ -67,6 +102,9 @@ Route::get('permission-error','AuthController@permissionError');
 */
 
 Route::get('dashboard', 'ClientDashboardController@dashboard');
+// Route::get('dashboard', 'ClientDashboardController@dashboard');
+Route::get('dashboard1', 'ClientDashboardController2@dashboard');
+
 Route::get('logout', 'ClientDashboardController@logout');
 Route::post('user/menu-open-status', 'ClientDashboardController@menuOpenStatus');
 
@@ -91,6 +129,9 @@ Route::post('admin/menu-open-status', 'DashboardController@menuOpenStatus');
 */
 
 Route::get('admin/dashboard', 'DashboardController@dashboard');
+Route::get('admin/dashboard1', 'DashboardController2@dashboard');
+
+
 Route::get('admin/logout', 'DashboardController@logout');
 
 //======================================================================
@@ -113,19 +154,45 @@ Route::get('admin/backup-database', 'DashboardController@backupDatabase');
 // Client Manage
 //======================================================================
 Route::get('clients/all', 'ClientController@allClients');
+Route::get('clients/all1', 'ClientController2@allClients');
+
+
 Route::any('clients/get-all-clients-data', 'ClientController@getAllClients');
+Route::any('clients/get-all-clients-data1', 'ClientController2@getAllClients');
+
+
 Route::get('clients/add', 'ClientController@addClient');
+Route::get('clients/add1', 'ClientController2@addClient');
+
+
 Route::post('clients/post-new-client', 'ClientController@addClientPost');
+Route::post('clients/post-new-client1', 'ClientController2@addClientPost');
+
 Route::get('clients/send-email', 'ClientController@sendEmail');
+Route::get('clients/send-email1', 'ClientController2@sendEmail');
+
 Route::post('clients/post-send-bulk-email', 'ClientController@postSendEmail');
+Route::post('clients/post-send-bulk-email1', 'ClientController2@postSendEmail');
 
 //======================================================================
 // Profile Manage
 //======================================================================
 Route::get('clients/view/{id}', 'ClientController@viewClient');
+Route::get('clients/view1/{id}', 'ClientController2@viewClient');
+
+
+
 Route::post('clients/update-limit', 'ClientController@updateLimit');
+Route::post('clients/update-limit1', 'ClientController2@updateLimit');
+
 Route::post('clients/update-image', 'ClientController@updateImage');
+Route::post('clients/update-image1', 'ClientController2@updateImage');
+
+
 Route::post('clients/update-client-post', 'ClientController@updateClient');
+Route::post('clients/update-client-post', 'ClientController2@updateClient');
+
+
 Route::post('clients/send-sms', 'ClientController@sendSMS');
 
 /*Export N Import wit CSV*/
@@ -160,28 +227,82 @@ Route::get('clients/delete-group/{id}', 'ClientController@deleteClientGroup');
 */
 
 Route::get('invoices/all', 'InvoiceController@allInvoices');
+Route::get('invoices/all1', 'InvoiceController2@allInvoices');
+
 Route::get('invoices/recurring', 'InvoiceController@recurringInvoices');
+
+
 Route::get('invoices/add', 'InvoiceController@addInvoice');
+Route::get('invoices/add1', 'InvoiceController2@addInvoice');
+
+
 Route::post('invoices/post-new-invoice', 'InvoiceController@postInvoice');
+Route::post('invoices/post-new-invoice1', 'InvoiceController2@postInvoice');
+
 Route::get('invoices/view/{id}', 'InvoiceController@viewInvoice');
+Route::get('invoices/view1/{id}', 'InvoiceController2@viewInvoice');
+
+
 Route::get('invoices/edit/{id}', 'InvoiceController@editInvoice');
+Route::get('invoices/edit1/{id}', 'InvoiceController2@editInvoice');
+
+
 Route::post('invoices/post-edit-invoice', 'InvoiceController@postEditInvoice');
+Route::post('invoices/post-edit-invoice1', 'InvoiceController2@postEditInvoice');
+
+
 Route::get('invoices/client-iview/{id}', 'InvoiceController@clientIView');
+Route::get('invoices/client-iview1/{id}', 'InvoiceController2@clientIView');
+
+
 Route::get('invoices/iprint/{id}', 'InvoiceController@printView');
+Route::get('invoices/iprint1/{id}', 'InvoiceController2@printView');
+
 Route::get('invoices/download-pdf/{id}', 'InvoiceController@downloadPdf');
+Route::get('invoices/download-pdf/{id}', 'InvoiceController2@downloadPdf');
+
+
 Route::get('invoices/mark-paid/{id}', 'InvoiceController@markInvoicePaid');
+Route::get('invoices/mark-paid1/{id}', 'InvoiceController2@markInvoicePaid');
+
+
+
 Route::get('invoices/mark-unpaid/{id}', 'InvoiceController@markInvoiceUnpaid');
+Route::get('invoices/mark-unpaid1/{id}', 'InvoiceController2@markInvoiceUnpaid');
+
+
 Route::get('invoices/mark-partially-paid/{id}', 'InvoiceController@markInvoicePartiallyPaid');
+Route::get('invoices/mark-partially-paid1/{id}', 'InvoiceController2@markInvoicePartiallyPaid');
+
+
 Route::get('invoices/mark-cancelled/{id}', 'InvoiceController@markInvoiceCancelled');
+Route::get('invoices/mark-cancelled1/{id}', 'InvoiceController2@markInvoiceCancelled');
+
+
 Route::get('invoices/iprint/{id}', 'InvoiceController@printView');
+Route::get('invoices/iprint1/{id}', 'InvoiceController2@printView');
+
+
 Route::post('invoices/update-invoice', 'InvoiceController@updateInvoice');
+
 Route::post('invoices/invoice-paid', 'InvoiceController@paidInvoice');
+
 Route::post('invoices/invoice-unpaid', 'InvoiceController@unpaidInvoice');
+
 Route::post('invoices/invoice-cancelled', 'InvoiceController@cancelledInvoice');
+
 Route::post('invoices/invoice-partially-paid', 'InvoiceController@partiallyPaidInvoice');
+
+
 Route::get('invoices/delete-invoice/{id}','InvoiceController@deleteInvoice');
+Route::get('invoices/delete-invoice1/{id}','InvoiceController2@deleteInvoice');
+
 Route::get('invoices/stop-recurring-invoice/{id}','InvoiceController@stopRecurringInvoice');
+Route::get('invoices/stop-recurring-invoice1/{id}','InvoiceController2@stopRecurringInvoice');
+
 Route::post('invoices/send-invoice-email','InvoiceController@sendInvoiceEmail');
+Route::post('invoices/send-invoice-email1','InvoiceController2@sendInvoiceEmail');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -223,24 +344,60 @@ Route::post('administrators/update-admin-set-roles','AdministratorController@upd
 */
 
 Route::get('support-tickets/all','SupportTicketController@all');
+Route::get('support-tickets/all1','SupportTicketController2@all');
+
 Route::get('support-tickets/create-new','SupportTicketController@createNew');
+Route::get('support-tickets/create-new1','SupportTicketController2@createNew');
+
 Route::get('support-tickets/view-ticket/{id}','SupportTicketController@viewTicket');
+Route::get('support-tickets/view-ticket1/{id}','SupportTicketController2@viewTicket');
+
+
 Route::get('support-tickets/department','SupportTicketController@department');
+Route::get('support-tickets/department1','SupportTicketController2@department');
+
+
 Route::get('support-tickets/view-department/{id}','SupportTicketController@viewDepartment');
-Route::get('support-tickets/ticket-department/{id}','SupportTicketController@ticketDepartment');
-Route::get('support-tickets/ticket-status/{id}','SupportTicketController@ticketStatus');
+Route::get('support-tickets/view-department1/{id}','SupportTicketController2@viewDepartment');
+
+// not fount rout
+// Route::get('support-tickets/ticket-department/{id}','SupportTicketController@ticketDepartment');
+// Route::get('support-tickets/ticket-status/{id}','SupportTicketController@ticketStatus');
+// Route::post('support-tickets/ticket-update-department','SupportTicketController@updateTicketDepartment');
+// Route::post('support-tickets/ticket-update-status','SupportTicketController@updateTicketStatus');
+
 Route::post('support-tickets/post-department','SupportTicketController@postDepartment');
+Route::post('support-tickets/post-department1','SupportTicketController2@postDepartment');
+
 Route::post('support-tickets/update-department','SupportTicketController@updateDepartment');
+Route::post('support-tickets/update-department1','SupportTicketController2@updateDepartment');
+
 Route::post('support-tickets/post-ticket','SupportTicketController@postTicket');
-Route::post('support-tickets/ticket-update-department','SupportTicketController@updateTicketDepartment');
-Route::post('support-tickets/ticket-update-status','SupportTicketController@updateTicketStatus');
+Route::post('support-tickets/post-ticket1','SupportTicketController2@postTicket');
+
+
+
 Route::post('support-tickets/replay-ticket','SupportTicketController@replayTicket');
+Route::post('support-tickets/replay-ticket1','SupportTicketController2@replayTicket');
+
 Route::get('support-tickets/delete-ticket/{id}','SupportTicketController@deleteTicket');
+Route::get('support-tickets/delete-ticket1/{id}','SupportTicketController2@deleteTicket');
+
 Route::get('support-tickets/delete-department/{id}','SupportTicketController@deleteDepartment');
+Route::get('support-tickets/delete-department1/{id}','SupportTicketController2@deleteDepartment');
+
+
 Route::post('support-ticket/basic-info-post','SupportTicketController@postBasicInfo');
+Route::post('support-ticket/basic-info-post1','SupportTicketController2@postBasicInfo');
+
 Route::post('support-ticket/post-ticket-files','SupportTicketController@postTicketFiles');
+Route::post('support-ticket/post-ticket-files1','SupportTicketController2@postTicketFiles');
+
 Route::get('support-ticket/download-file/{id}','SupportTicketController@downloadTicketFile');
+Route::get('support-ticket/download-file1/{id}','SupportTicketController2@downloadTicketFile');
+
 Route::get('support-ticket/delete-ticket-file/{id}','SupportTicketController@deleteTicketFile');
+Route::get('support-ticket/delete-ticket-file1/{id}','SupportTicketController2@deleteTicketFile');
 
 
 /*
@@ -256,10 +413,22 @@ Route::get('support-ticket/delete-ticket-file/{id}','SupportTicketController@del
 // General Setting
 //======================================================================
 Route::get('settings/general','SettingController@general');
+Route::get('settings/general1','SettingController2@general');
+
 Route::post('settings/post-general-setting','SettingController@postGeneralSetting');
+Route::post('settings/post-general-setting1','SettingController2@postGeneralSetting');
+
 Route::post('settings/post-system-email-setting','SettingController@postSystemEmailSetting');
+Route::post('settings/post-system-email-setting1','SettingController2@postSystemEmailSetting');
+
+
 Route::post('settings/post-system-sms-setting','SettingController@postSystemSMSSetting');
+Route::post('settings/post-system-sms-setting1','SettingController2@postSystemSMSSetting');
+
+
 Route::post('settings/post-system-auth-setting','SettingController@postSystemAuthSetting');
+Route::post('settings/post-system-auth-setting1','SettingController2@postSystemAuthSetting');
+
 
 //======================================================================
 // Localization
@@ -271,8 +440,14 @@ Route::post('settings/localization-post','SettingController@localizationPost');
 
 /*Email Template Module*/
 Route::get('settings/email-templates','SettingController@emailTemplates');
+Route::get('settings/email-templates1','SettingController2@emailTemplates');
+
 Route::get('settings/email-template-manage/{id}','SettingController@manageTemplate');
+Route::get('settings/email-template-manage1/{id}','SettingController2@manageTemplate');
+
 Route::post('settings/email-templates-update','SettingController@updateTemplate');
+Route::post('settings/email-templates-update1','SettingController2@updateTemplate');
+
 
 //======================================================================
 // Language Settings
@@ -292,8 +467,13 @@ Route::get('language/change/{id}','SettingController@languageChange');
 // Payment Gateway Setting
 //======================================================================
 Route::get('settings/payment-gateways','SettingController@paymentGateways');
+Route::get('settings/payment-gateways1','SettingController2@paymentGateways');
+
 Route::get('settings/payment-gateway-manage/{id}','SettingController@paymentGatewayManage');
+Route::get('settings/payment-gateway-manage1/{id}','SettingController2@paymentGatewayManage');
+
 Route::post('settings/post-payment-gateway-manage','SettingController@postPaymentGatewayManage');
+Route::post('settings/post-payment-gateway-manage1','SettingController2@postPaymentGatewayManage');
 
 
 //======================================================================
@@ -339,17 +519,39 @@ Route::get('sms/delete-sender-id/{id}','SMSController@deleteSenderID');
 // SMS Price Plan
 //======================================================================
 Route::get('sms/price-plan','SMSController@pricePlan');
+Route::get('sms/price-plan1','SMSController2@pricePlan');
+
+
 Route::get('sms/add-price-plan','SMSController@addPricePlan');
+Route::get('sms/add-price-plan1','SMSController2@addPricePlan');
+
 Route::post('sms/post-new-price-plan','SMSController@postNewPricePlan');
+Route::post('sms/post-new-price-plan1','SMSController2@postNewPricePlan');
+
 Route::get('sms/manage-price-plan/{id}','SMSController@managePricePlan');
+Route::get('sms/manage-price-plan1/{id}','SMSController2@managePricePlan');
+
 Route::post('sms/post-manage-price-plan','SMSController@postManagePricePlan');
+Route::post('sms/post-manage-price-plan1','SMSController2@postManagePricePlan');
+
 Route::get('sms/add-plan-feature/{id}','SMSController@addPlanFeature');
+Route::get('sms/add-plan-feature1/{id}','SMSController2@addPlanFeature');
+
 Route::post('sms/post-new-plan-feature','SMSController@postNewPlanFeature');
+Route::post('sms/post-new-plan-feature1','SMSController2@postNewPlanFeature');
+
 Route::get('sms/view-plan-feature/{id}','SMSController@viewPlanFeature');
+
 Route::get('sms/delete-plan-feature/{id}','SMSController@deletePlanFeature');
+Route::get('sms/delete-plan-feature1/{id}','SMSController2@deletePlanFeature');
+
+
 Route::get('sms/manage-plan-feature/{id}','SMSController@managePlanFeature');
 Route::post('sms/post-manage-plan-feature','SMSController@postManagePlanFeature');
+
 Route::get('sms/delete-price-plan/{id}','SMSController@deletePricePlan');
+Route::get('sms/delete-price-plan1/{id}','SMSController2@deletePricePlan');
+
 
 /*Version 1.3*/
 
@@ -529,18 +731,51 @@ Route::get('users/delete-group/{id}', 'UserController@deleteUserGroup');
 */
 
 Route::get('user/invoices/all', 'ClientInvoiceController@allInvoices');
+Route::get('user/invoices/all1', 'ClientInvoiceController2@allInvoices');
+
+Route::get('user/invoices/paid-invoice', 'ClientInvoiceController2@paidInvoice');
+Route::get('user/invoices/unpaid-invoice', 'ClientInvoiceController2@unpaidInvoice');
+
+
 Route::get('user/invoices/recurring', 'ClientInvoiceController@recurringInvoices');
+
 Route::get('user/invoices/view/{id}', 'ClientInvoiceController@viewInvoice');
+Route::get('user/invoices/view1/{id}', 'ClientInvoiceController2@viewInvoice');
+
+
+
 Route::get('user/invoices/client-iview/{id}', 'ClientInvoiceController@clientIView');
+Route::get('user/invoices/client-iview1/{id}', 'ClientInvoiceController2@clientIView');
+
 Route::get('user/invoices/iprint/{id}', 'ClientInvoiceController@printView');
+Route::get('user/invoices/iprint1/{id}', 'ClientInvoiceController2@printView');
+
+
+
 Route::get('user/invoices/download-pdf/{id}', 'ClientInvoiceController@downloadPdf');
+Route::get('user/invoices/download-pdf1/{id}', 'ClientInvoiceController2@downloadPdf');
+
 Route::get('user/invoices/iprint/{id}', 'ClientInvoiceController@printView');
+Route::get('user/invoices/iprint1/{id}', 'ClientInvoiceController2@printView');
+
 Route::get('user/invoices/iprint/{id}', 'ClientInvoiceController@printView');
+Route::get('user/invoices/iprint1/{id}', 'ClientInvoiceController2@printView');
+
 Route::any('user/invoices/pay-invoice', 'PaymentController@payInvoice');
+Route::any('user/invoices/pay-invoice1', 'PaymentController2@payInvoice');
+
 Route::any('user/invoice/success/{token}/{id}', 'PaymentController@successInvoice');
+Route::any('user/invoice/success1/{token}/{id}', 'PaymentController2@successInvoice');
+
 Route::any('user/invoice/cancel/{id}', 'PaymentController@cancelledInvoice');
+Route::any('user/invoice/cancel1/{id}', 'PaymentController2@cancelledInvoice');
+
 Route::any('user/slydepay/receive-callback', 'PaymentController@slydepayReceiveCallback');
+Route::any('user/slydepay/receive-callback1', 'PaymentController2@slydepayReceiveCallback');
+
 Route::post('user/invoices/pay-with-stripe', 'PaymentController@payWithStripe');
+Route::post('user/invoices/pay-with-stripe1', 'PaymentController2@payWithStripe');
+
 
 
 /*
@@ -553,12 +788,31 @@ Route::post('user/invoices/pay-with-stripe', 'PaymentController@payWithStripe');
 */
 
 Route::get('user/tickets/all','UserTicketController@allSupportTickets');
+Route::get('user/tickets/all1','UserTicketController2@allSupportTickets');
+
+
+
 Route::get('user/tickets/create-new','UserTicketController@createNewTicket');
+Route::get('user/tickets/create-new1','UserTicketController2@createNewTicket');
+
+
+
 Route::post('user/tickets/post-ticket','UserTicketController@postTicket');
+Route::post('user/tickets/post-ticket1','UserTicketController2@postTicket');
+
 Route::get('user/tickets/view-ticket/{id}','UserTicketController@viewTicket');
+Route::get('user/tickets/view-ticket1/{id}','UserTicketController2@viewTicket');
+
+
 Route::post('user/tickets/replay-ticket','UserTicketController@replayTicket');
+Route::post('user/tickets/replay-ticket1','UserTicketController2@replayTicket');
+
 Route::post('user/tickets/post-ticket-files','UserTicketController@postTicketFiles');
+Route::post('user/tickets/post-ticket-files1','UserTicketController2@postTicketFiles');
+
+
 Route::get('user/tickets/download-file/{id}','UserTicketController@downloadTicketFile');
+Route::get('user/tickets/download-file1/{id}','UserTicketController2@downloadTicketFile');
 
 
 /*
@@ -633,9 +887,21 @@ Route::get('user/sms/delete-sms/{id}','UserSMSController@deleteSMS');
 // Purchase SMS Plan
 //======================================================================
 Route::get('user/sms/purchase-sms-plan','UserSMSController@purchaseSMSPlan');
+Route::get('user/sms/purchase-sms-plan1','UserSMSController2@purchaseSMSPlan');
+
+Route::get('user/sms/purchase_custom_plan/{id}','UserSMSController@purchase_custom_plan');
+Route::get('user/sms/purchase_custom_plan1/{id}','UserSMSController2@purchase_custom_plan');
+
 Route::get('user/sms/sms-plan-feature/{id}','UserSMSController@smsPlanFeature');
+Route::get('user/sms/sms-plan-feature1/{id}','UserSMSController2@smsPlanFeature');
+
 Route::post('user/sms/post-purchase-sms-plan','PaymentController@purchaseSMSPlanPost');
+
+Route::post('user/sms/post-purchase-sms-plan1','PaymentController2@purchaseSMSPlanPost');
+
 Route::any('user/sms/purchase-plan/success/{token}/{id}','PaymentController@successPurchase');
+Route::any('user/sms/purchase-plan/success1','PaymentController2@successPurchase');
+
 Route::any('user/sms/purchase-plan/cancel/{id}','PaymentController@cancelledPurchase');
 Route::post('user/sms/purchase-with-stripe','PaymentController@purchaseWithStripe');
 
@@ -652,8 +918,14 @@ Route::post('user/sms/buy-unit-with-stripe','PaymentController@buyUnitWithStripe
 // API Information
 //======================================================================
 Route::get('user/sms-api/info','UserSMSController@apiInfo');
+Route::get('user/sms-api/info1','UserSMSController2@apiInfo');
+
+
+
 Route::get('user/sms-api/sdk','UserSMSController@sdkInfo');
+
 Route::post('user/sms-api/update-info','UserSMSController@updateApiInfo');
+Route::post('user/sms-api/update-info1','UserSMSController2@updateApiInfo');
 
 //======================================================================
 // User Information
@@ -759,8 +1031,14 @@ Route::get('custom-update','CommonDataController@customUpdate');
 // Paynow Payment Gateway
 //======================================================================
 Route::any('user/invoice/paynow/{id}', 'PaymentController@payNowInvoice');
+Route::any('user/invoice/paynow1/{id}', 'PaymentController2@payNowInvoice');
+
 Route::any('user/sms/purchase-plan/paynow/{id}','PaymentController@payNowPurchasePlan');
+Route::any('user/sms/purchase-plan/paynow1/{id}','PaymentController2@payNowPurchasePlan');
+
 Route::any('user/sms/buy-unit/paynow/{id}','PaymentController@buyUnitByPayNow');
+Route::any('user/sms/buy-unit/paynow1/{id}','PaymentController2@buyUnitByPayNow');
+
 Route::any('user/keywords/buy-keyword/paynow/{id}','PaymentController@buyKeywordByPayNow');
 
 //======================================================================

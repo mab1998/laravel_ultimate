@@ -87,9 +87,9 @@ class SupportTicketController extends Controller
             return redirect('support-tickets/add-department')->withErrors($v->errors());
         }
 
-        $dname  = Input::get('dname');
-        $demail = Input::get('email');
-        $show   = Input::get('show');
+        $dname  = $request->get('dname');
+        $demail = $request->get('email');
+        $show   = $request->get('show');
 
         if ($dname != '') {
             $d = SupportDepartments::where('email', '=', $demail)->first();
@@ -171,7 +171,7 @@ class SupportTicketController extends Controller
             'dname' => 'required', 'email' => 'required', 'show' => 'required'
         ]);
 
-        $id = Input::get('cmd');
+        $id = $request->get('cmd');
 
         $appStage = app_config('AppStage');
         if ($appStage == 'Demo') {
@@ -186,9 +186,9 @@ class SupportTicketController extends Controller
             return redirect('support-tickets/view-department/' . $id)->withErrors($v->errors());
         }
 
-        $dname  = Input::get('dname');
-        $demail = Input::get('email');
-        $show   = Input::get('show');
+        $dname  = $request->get('dname');
+        $demail = $request->get('email');
+        $show   = $request->get('show');
 
         $findEmail = SupportDepartments::find($id);
         $exitEmail = $findEmail->email;
@@ -276,10 +276,10 @@ class SupportTicketController extends Controller
             return redirect('support-tickets/create-new')->withInput($request->all())->withErrors($v->errors());
         }
 
-        $cid        = Input::get('cid');
-        $subject    = Input::get('subject');
-        $st_message = Input::get('message');
-        $did        = Input::get('did');
+        $cid        = $request->get('cid');
+        $subject    = $request->get('subject');
+        $st_message = $request->get('message');
+        $did        = $request->get('did');
 
         $cl       = Client::find($cid);
         $cl_name  = $cl->fname . ' ' . $cl->lname;
@@ -345,7 +345,7 @@ class SupportTicketController extends Controller
         $department  = SupportDepartments::all();
         $ticket_file = SupportTicketFiles::where('ticket_id', $id)->get();
 
-        return view('admin.view-support-ticket', compact('st', 'sd', 'td', 'trply', 'department', 'ticket_file'));
+        return view('admin.view-support-ticket', compact('st', 'td', 'trply', 'department', 'ticket_file'));
     }
 
 
@@ -368,9 +368,9 @@ class SupportTicketController extends Controller
             'department' => 'required', 'status' => 'required'
         ]);
 
-        $cmd        = Input::get('cmd');
-        $department = Input::get('department');
-        $status     = Input::get('status');
+        $cmd        = $request->get('cmd');
+        $department = $request->get('department');
+        $status     = $request->get('status');
         if ($v->fails()) {
             return redirect('support-tickets/view-ticket/' . $cmd)->withErrors($v->errors());
         }
@@ -409,13 +409,13 @@ class SupportTicketController extends Controller
             'message' => 'required'
         ]);
 
-        $cmd = Input::get('cmd');
+        $cmd = $request->get('cmd');
 
         if ($v->fails()) {
             return redirect('support-tickets/view-ticket/' . $cmd)->withErrors($v->errors());
         }
 
-        $message = Input::get('message');
+        $message = $request->get('message');
 
         $st  = SupportTickets::find($cmd);
         $cid = $st->cl_id;
@@ -480,7 +480,7 @@ class SupportTicketController extends Controller
             }
         }
 
-        $cmd = Input::get('cmd');
+        $cmd = $request->get('cmd');
         $v   = \Validator::make($request->all(), [
             'file_title' => 'required', 'file' => 'required|image|mimes:jpeg,jpg,png,gif'
         ]);
@@ -489,8 +489,8 @@ class SupportTicketController extends Controller
             return redirect('support-tickets/view-ticket/' . $cmd)->withErrors($v->errors());
         }
 
-        $file_title = Input::get('file_title');
-        $file       = Input::file('file');
+        $file_title = $request->get('file_title');
+        $file       = $request->file('file');
         $admin_id   = \Auth::user()->id;
         $admin_name = \Auth::user()->fname;
 
@@ -500,7 +500,7 @@ class SupportTicketController extends Controller
                 $destinationPath = public_path() . '/assets/ticket_file/';
                 $file_name       = $file->getClientOriginalName();
                 $file_size       = $file->getSize();
-                Input::file('file')->move($destinationPath, $file_name);
+                $request->file('file')->move($destinationPath, $file_name);
 
                 $tf             = new SupportTicketFiles();
                 $tf->ticket_id  = $cmd;

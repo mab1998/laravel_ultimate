@@ -70,6 +70,7 @@
                                 </div>
                             </div>
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            
                             <input type="submit" class="btn btn-primary btn-block btn-lg" value="{{language_data('Login')}}">
                         </form>
                         <br>

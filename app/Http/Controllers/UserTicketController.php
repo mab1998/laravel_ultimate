@@ -104,7 +104,7 @@ class UserTicketController extends Controller
         $department  = SupportDepartments::all();
         $ticket_file = SupportTicketFiles::where('ticket_id', $id)->get();
 
-        return view('client.view-support-ticket', compact('st', 'sd', 'td', 'trply', 'department', 'ticket_file'));
+        return view('client.view-support-ticket', compact('st', 'td', 'trply', 'department', 'ticket_file'));
     }
 
     /* replayTicket  Function Start Here */

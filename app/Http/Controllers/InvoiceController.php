@@ -913,7 +913,7 @@ class InvoiceController extends Controller
             ]);
 
         } else {
-            return redirect('invoices/all')->with([
+            return redirect('invoices/all1')->with([
                 'message' => language_data('Invoice not found'),
                 'message_important' => true
             ]);
