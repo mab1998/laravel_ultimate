@@ -28,29 +28,12 @@ class ClientDashboardController2 extends Controller
     //======================================================================
     public function dashboard()
     {
-
         //For Invoice chart
 
         $inv_unpaid         = Invoices::where('status', 'Unpaid')->where('cl_id', Auth::guard('client')->user()->id)->count();
         $inv_paid           = Invoices::where('status', 'Paid')->where('cl_id', Auth::guard('client')->user()->id)->count();
         $inv_cancelled      = Invoices::where('status', 'Cancelled')->where('cl_id', Auth::guard('client')->user()->id)->count();
         $inv_partially_paid = Invoices::where('status', 'Partially Paid')->where('cl_id', Auth::guard('client')->user()->id)->count();
-
-        $invoices_json = app()->chartjs
-            ->name('invoiceChart')
-            ->type('pie')
-            ->size(['width' => 400, 'height' => 200])
-            ->labels(['Unpaid', 'Paid', 'Cancelled', 'Partially Paid'])
-            ->datasets([
-                [
-                    'backgroundColor' => ['#F0AD4E', '#30DDBC', '#D9534F', '#5BC0DE'],
-                    'hoverBackgroundColor' => ['#F0AD4E', '#30DDBC', '#D9534F', '#5BC0DE'],
-                    'data' => [$inv_unpaid, $inv_paid, $inv_cancelled, $inv_partially_paid]
-                ]
-            ])
-            ->options([
-                'legend' => ['display' => false]
-            ]);
 
 
         //For Support Ticket Chart
@@ -61,129 +44,16 @@ class ClientDashboardController2 extends Controller
         $st_closed   = SupportTickets::where('status', 'Closed')->where('cl_id', Auth::guard('client')->user()->id)->count();
 
 
-        $tickets_json = app()->chartjs
-            ->name('supportTicketChart')
-            ->type('doughnut')
-            ->size(['width' => 400, 'height' => 200])
-            ->labels(['Pending', 'Answered', 'Customer Reply', 'Closed'])
-            ->datasets([
-                [
-                    'backgroundColor' => ['#d9534f', '#30DDBC', '#5bc0de', '#7E57C2'],
-                    'hoverBackgroundColor' => ['#d9534f', '#30DDBC', '#5bc0de', '#7E57C2'],
-                    'data' => [$st_pending, $st_answered, $st_replied, $st_closed]
-                ]
-            ])
-            ->options([
-                'legend' => ['display' => false]
-            ]);
-
-
-        //For SMS Status Chart
-
-
-        //For SMS Status Chart
 
         $sms_count   = SMSHistory::where('userid', Auth::guard('client')->user()->id)->count();
         $sms_success = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('status', 'like', '%Success%')->count();
         $sms_failed  = $sms_count - $sms_success;
 
 
-        $sms_status_json = app()->chartjs
-            ->name('smsStatusChat')
-            ->type('pie')
-            ->size(['width' => 400, 'height' => 200])
-            ->labels(['Success', 'Failed'])
-            ->datasets([
-                [
-                    'backgroundColor' => ['#30DDBC', '#F95F5B'],
-                    'hoverBackgroundColor' => ['#30DDBC', '#F95F5B'],
-                    'data' => [$sms_success, $sms_failed]
-                ]
-            ])
-            ->options([
-                'legend' => ['display' => false]
-            ]);
-
-
-        //For SMS History Chart
-        $day_10 = get_date_format(Carbon::now(app_config('Timezone'))->subDays(9));
-        $day_9  = get_date_format(Carbon::now(app_config('Timezone'))->subDays(8));
-        $day_8  = get_date_format(Carbon::now(app_config('Timezone'))->subDays(7));
-        $day_7  = get_date_format(Carbon::now(app_config('Timezone'))->subDays(6));
-        $day_6  = get_date_format(Carbon::now(app_config('Timezone'))->subDays(5));
-        $day_5  = get_date_format(Carbon::now(app_config('Timezone'))->subDays(4));
-        $day_4  = get_date_format(Carbon::now(app_config('Timezone'))->subDays(3));
-        $day_3  = get_date_format(Carbon::now(app_config('Timezone'))->subDays(2));
-        $day_2  = get_date_format(Carbon::now(app_config('Timezone'))->subDays(1));
-        $day_1  = get_date_format(Carbon::now(app_config('Timezone')));
-
-        $day_10_count_inbound  = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'receiver')->whereDay('created_at', get_mysql_date($day_10))->count();
-        $day_10_count_outbound = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'sender')->whereDay('created_at', get_mysql_date($day_10))->count();
-
-        $day_9_count_inbound  = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'receiver')->whereDay('created_at', get_mysql_date($day_9))->count();
-        $day_9_count_outbound = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'sender')->whereDay('created_at', get_mysql_date($day_9))->count();
-
-        $day_8_count_inbound  = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'receiver')->whereDay('created_at', get_mysql_date($day_8))->count();
-        $day_8_count_outbound = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'sender')->whereDay('created_at', get_mysql_date($day_8))->count();
-
-        $day_7_count_inbound  = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'receiver')->whereDay('created_at', get_mysql_date($day_7))->count();
-        $day_7_count_outbound = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'sender')->whereDay('created_at', get_mysql_date($day_7))->count();
-
-        $day_6_count_inbound  = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'receiver')->whereDay('created_at', get_mysql_date($day_6))->count();
-        $day_6_count_outbound = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'sender')->whereDay('created_at', get_mysql_date($day_6))->count();
-
-        $day_5_count_inbound  = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'receiver')->whereDay('created_at', get_mysql_date($day_5))->count();
-        $day_5_count_outbound = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'sender')->whereDay('created_at', get_mysql_date($day_5))->count();
-
-        $day_4_count_inbound  = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'receiver')->whereDay('created_at', get_mysql_date($day_4))->count();
-        $day_4_count_outbound = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'sender')->whereDay('created_at', get_mysql_date($day_4))->count();
-
-        $day_3_count_inbound  = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'receiver')->whereDay('created_at', get_mysql_date($day_3))->count();
-        $day_3_count_outbound = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'sender')->whereDay('created_at', get_mysql_date($day_3))->count();
-
-        $day_2_count_inbound  = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'receiver')->whereDay('created_at', get_mysql_date($day_2))->count();
-        $day_2_count_outbound = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'sender')->whereDay('created_at', get_mysql_date($day_2))->count();
-
-        $day_1_count_inbound  = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'receiver')->whereDay('created_at', get_mysql_date($day_1))->count();
-        $day_1_count_outbound = SMSHistory::where('userid', Auth::guard('client')->user()->id)->where('send_by', 'sender')->whereDay('created_at', get_mysql_date($day_1))->count();
-
-
-        $sms_history = app()->chartjs
-            ->name('smsHistoryChart')
-            ->type('line')
-            ->size(['width' => 200, 'height' => 50])
-            ->labels([$day_10, $day_9, $day_8, $day_7, $day_6, $day_5, $day_4, $day_3, $day_2, $day_1])
-            ->datasets([
-                [
-                    "label" => "Outbound",
-                    'backgroundColor' => "rgba(0, 51, 102, 0.5)",
-                    'borderColor' => "rgba(0, 51, 102, 0.8)",
-                    "pointBorderColor" => "rgba(0, 51, 102, 0.8)",
-                    "pointBackgroundColor" => "rgba(0, 51, 102, 0.8)",
-                    "pointHoverBackgroundColor" => "#fff",
-                    "pointHoverBorderColor" => "rgba(220,220,220,1)",
-                    'data' => [$day_10_count_outbound, $day_9_count_outbound, $day_8_count_outbound, $day_7_count_outbound, $day_6_count_outbound, $day_5_count_outbound, $day_4_count_outbound, $day_3_count_outbound, $day_2_count_outbound, $day_1_count_outbound],
-                ],
-                [
-                    "label" => "Inbound",
-                    'backgroundColor' => "rgba(233, 114, 76, 0.5)",
-                    'borderColor' => "rgba(233, 114, 76, 0.8)",
-                    "pointBorderColor" => "rgba(233, 114, 76, 0.8)",
-                    "pointBackgroundColor" => "rgba(233, 114, 76, 0.8)",
-                    "pointHoverBackgroundColor" => "#fff",
-                    "pointHoverBorderColor" => "rgba(220,220,220,1)",
-                    'data' => [$day_10_count_inbound, $day_9_count_inbound, $day_8_count_inbound, $day_7_count_inbound, $day_6_count_inbound, $day_5_count_inbound, $day_4_count_inbound, $day_3_count_inbound, $day_2_count_inbound, $day_1_count_inbound],
-                ]
-            ])
-            ->options([
-                'legend' => ['display' => false]
-            ]);
-
-
         $recent_five_invoices = Invoices::orderBy('id', 'desc')->where('cl_id', Auth::guard('client')->user()->id)->take(5)->get();
         $recent_five_tickets  = SupportTickets::orderBy('id', 'desc')->where('cl_id', Auth::guard('client')->user()->id)->take(5)->get();
 
-        return view('client1.dashboard', compact('invoices_json', 'sms_history', 'tickets_json', 'sms_status_json', 'recent_five_invoices', 'recent_five_tickets'));
+        return view('client1.dashboard',compact('inv_unpaid','inv_paid','inv_cancelled','inv_partially_paid'));
     }
 
     //======================================================================

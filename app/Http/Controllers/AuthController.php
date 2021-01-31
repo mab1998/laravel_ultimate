@@ -399,6 +399,7 @@ class AuthController extends Controller
         $check_input = $request->only('username', 'password');
         $remember    = ($request->has('remember')) ? true : false;
 
+
         if (app_config('captcha_in_admin') == '1') {
             if (isset($_POST['g-recaptcha-response'])) {
                 $getCaptchaResponse = $_POST['g-recaptcha-response'];

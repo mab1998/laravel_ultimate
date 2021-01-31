@@ -167,7 +167,9 @@ return [
          */
 		Collective\Html\HtmlServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
-		Shamim\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
+		// Shamim\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
+			    RachidLaasri\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
+
 		 Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class,
 		  Unicodeveloper\Paystack\PaystackServiceProvider::class,
 
@@ -179,7 +181,7 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 

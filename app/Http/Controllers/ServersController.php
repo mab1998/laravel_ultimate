@@ -23,137 +23,143 @@ class ServersController extends Controller
         return view('admin1.create-server');
     }
     public function CreatNewServer_Post(Request $request) {
+        echo "hello";
+        $USER='mabrouk2288';
+        $PASS='d';
+        // $creat_user="sudo pam-auth-update --package |  sudo mount -o remount,rw / | sudo chmod 640 /etc/shadow | sudo useradd -m -s /bin/bash ".strval($USER)." | echo ".strval($USER).":".strval($PASS)."|sudo chpasswd |sudo usermod -aG sudo ".strval($USER) ;
+
+        
         $ssh = New SSH($request->IP, $request->Port);
         if(!$ssh->login($request->username, $request->password)) {
             abort(500);
         }
+        echo "vv";
+        // SFTP connection
 
-        // $response = $ssh->exec('apt-get -y install software-properties-common');
-        $response = $ssh->exec('apt-get -y autoremove');
-
-        return $response;
-
-
-        // SFTP connect
         $sftp = new Net_SFTP($request->IP);
         if (!$sftp->login($request->username, $request->password)) {
             exit('bad login');
         }
+        // return 'ok';
 
-        // SSH connection
-        $ssh = New SSH($request->IP, $request->Port);
-        if(!$ssh->login($request->username, $request->password)) {
-            abort(500);
+        echo "sftp download";
+
+        $files = array("default", "index.php","cipi_dbroot","default","haget.conf","jail","motd","nginx.conf","nodesource.list","php_fpm","phpfpm.conf","sites-available_default");
+        foreach ($files as $key => $file) {
+            $sftp->put("upload/".$file,"upload/".$file,Net_SFTP::SOURCE_LOCAL_FILE);
         }
 
-        // check user root
-        $response = $ssh->exec('(id -u)');
-        if ($response==0){
-            // return $response;
+
+
+        // return "Ok";
+
+        $response = $ssh->exec("lsb_release -d | grep 'Ubuntu 20';");
+        if (!str_contains($response, 'Ubuntu 20')){
+            return "You shoud have Ubuntu 20 in your machine";
         }
 
-        // Create App file
-        $response = $ssh->exec('mkdir cipi ');
-        $response = $ssh->exec('chmod o-r /cipi');
-
-        // Reposatrie
-        $response = $ssh->exec('apt-get -y install software-properties-common');
-        $response = $ssh->exec('apt-get -y autoremove');
-        $response = $ssh->exec('apt-get update');
-        $response = $ssh->exec('apt-get upgrade -y');
-        // $response = $ssh->exec('apt-get update');
-
-        return $response;
-
-
-
-
-        return $response;
-
-        
-
-        $uploadFile =   $sftp->put(
-             'hostadd.sh',
-            'scripts/hostadd.sh',
-            Net_SFTP::SOURCE_LOCAL_FILE);
-
-            // Use sftp to make an mv
-        
-        
-       
-
-        
-
-
-
-        
-        // $pass = sha1(uniqid().microtime().$server->ip);
-        // $ssh->setTimeout(360);
-        // $response = $ssh->exec('echo '.$server->password.' | sudo -S sudo sh /cipi/root.sh -p '.$pass);
- 
-
-        // $this->validate($request, [
-        //     'name' => 'required',
-        //     'ip' => 'required'
-        // ]);
-
-
+        $response = $ssh->exec("id -u");
+        // return $response;
+        if ($response!=0){
+            return "You shoud have root access";
+        }
 
         $serv               = new Server();
         $serv->name        = $request->name_server;
-        $serv->provider  = $request->name_server;
-        $serv->location   = $request->name_server;
         $serv->ip      = $request->IP;
-        $serv->port      = $request->Port;
-        // $serv->username     = $request->name_server;
-        $serv->password     = $request->name_server;
-        $serv->dbroot        = $request->name_server;
+        $serv->username     = $request->username;
+        $serv->password     = $request->password;
         $serv->status       = 1;
-        $serv->servercode      = 1;
-        // $serv->recurring    = $r;
-        // $serv->bill_created = $bill_created;
-        // $serv->note         = $notes;
+
         $serv->save();
-        // return $serv;
+ 
+        return redirect('server')->with([
+            'message' => 'alert-success', 'Server '.$request->name.' has been created!',
+            'message_important' => true
+        ]);
+
         
-        // if($request->ip == $request->server('SERVER_ADDR')) {
-        //     $request->session()->flash('alert-error', 'You can\'t install a client server into the same Cipi Server!');
-        //     return redirect('/servers');
-        // }
-        // Server::create([
-        //     'name'      => $request->name_server,
-        //     'provider'  => $request->name_server,
-        //     'location'  => $request->name_server,
-        //     'ip'        => $request->IP,
-        //     'port'      => 22,
-        //     'username'  => $request->username,
-        //     'password'  => $request->password,
-        //     'dbroot'    => $request->username,
-        //     'servercode'=> $request->username
-        // ]);
-        return redirect('server')->with([
-            'message' => 'alert-success', 'Server '.$request->name.' has been created!',
-            'message_important' => true
-        ]);
-        // $request->session()->flash('alert-success', 'Server '.$request->name.' has been created!');
-        // return redirect('/servers');
-        return "aa";
+        // Update apt-get
 
-        return redirect('server')->with([
-            'message' => 'alert-success', 'Server '.$request->name.' has been created!',
-            'message_important' => true
-        ]);
+        $response = $ssh->exec("sudo apt-get update",function($output) {
+            echo $output;
+            echo '/n';
+        });
+        // Installing Requirement Package
+        $packages=" sudo apt-get -y install nano rpl sed zip unzip openssl expect dirmngr apt-transport-https lsb-release ca-certificates dnsutils dos2unix zsh htop curl wget software-properties-common fail2ban nginx php-fpm php-common php-mbstring php-mysql php-xml php-zip php-bcmath php-imagick mysql-server redis-server git supervisor nodejs npm yarn php-curl";
+        $response = $ssh->exec($packages, function($output) {
+            echo $output;
+            echo '/n';
+        });
 
-        // return $request;
-        // // $dbroot=$request->get("password");
-        // $dbroot=$request->get("name_server");
-        // $dbroot=$request->get("IP");
-        // $dbroot=$request->get("Port");
-        // $dbroot=$request->get("username");
-        // $dbroot=$request->get("password");
-        // $dbroot=$request->get("dbroot");
-        // // $servers = Server::all();
-        // return view('admin1.create-server');
+        $response = $ssh->exec("sudo apt-get -y autoremove", function($output) {
+            // return "hello";
+            echo $output;
+            echo '/n';
+        });
+
+        // Craeate New User
+        $response = $ssh->exec("sudo pam-auth-update --package");
+        $response = $ssh->exec("sudo mount -o remount,rw /");
+        $response = $ssh->exec("sudo chmod 640 /etc/shadow");
+        $response = $ssh->exec("sudo useradd -m -s /bin/bash ".strval($USER));
+        $response = $ssh->exec("echo ".strval($USER).":".strval($PASS)."|sudo chpasswd");
+        $response = $ssh->exec("sudo usermod -aG sudo ".strval($USER));
+
+        // firewall config
+        $response = $ssh->exec("sudo ufw allow ssh");
+        $response = $ssh->exec("sudo ufw allow http");
+        $response = $ssh->exec("sudo ufw allow https");
+        $response = $ssh->exec("Nginx Full");
+        $response = $ssh->exec("ufw --force enable");
+
+        // nginx config
+        $response = $ssh->exec("sudo systemctl start nginx.service");
+        $response = $ssh->exec('sudo rpl -i -w "http {" "http { limit_req_zone \$binary_remote_addr zone=one:10m rate=1r/s; fastcgi_read_timeout 300;" /etc/nginx/nginx.conf');
+        $response = $ssh->exec("sudo systemctl enable nginx.service");
+
+        // redis config
+        $response = $ssh->exec('sudo rpl -i -w "supervised no" "supervised systemd" /etc/redis/redis.conf');
+        $response = $ssh->exec("sudo systemctl restart redis.service");
+
+        // encrypt
+        
+        $response = $ssh->exec("sudo snap install --beta --classic certbot");
+
+        // install composer
+
+        $response = $ssh->exec("curl -sS https://getcomposer.org/installer -o composer-setup.php");
+        $response = $ssh->exec("unlink('composer-setup.php');");
+        $response = $ssh->exec("sudo php composer-setup.php");
+        $response = $ssh->exec("sudo mv composer.phar /usr/local/bin/composer");
+        $response = $ssh->exec("sudo composer config --global repo.packagist composer https://packagist.org");
+
+        // restart supervisor
+        $response = $ssh->exec("service supervisor restart");
+
+        // config postfix
+
+        $response = $ssh->exec("sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq postfix");
+
+        // PHP My Admin
+
+        $response = $ssh->exec("composer create-project phpmyadmin/phpmyadmin /var/www/html/pma");
+        $response = $ssh->exec("sudo mkdir /var/www/html/pma/tmp/");
+        $response = $ssh->exec("sudo chmod 777 /var/www/html/pma/tmp/");
+        $response = $ssh->exec("sudo mv /var/www/html/pma/config.sample.inc.php /var/www/html/pma/config.inc.php");
+        $response = $ssh->exec('sudo rpl -i -w "["blowfish_secret"] = "";" "["blowfish_secret"] = "M12SQBq5JKVGA0qZ4ZhPBwfmb0hBYkMA";" /var/www/html/pma/config.inc.php');
+
+        
+        // postfix
+        $response = $ssh->exec("sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq postfix");
+
+
+        // return 'Ok';
+
+
+        
+
+    
     }
 
     public function api() {
@@ -274,7 +280,7 @@ class ServersController extends Controller
         $ssh->setTimeout(360);
         $ssh->exec('sudo service php7.4-fpm restart');
         $ssh->exec('sudo service php7.3-fpm restart');
-        $ssh->exec('sudo service php7.2-fpm restart');
+        $ssh->exec('sudo service php-fpm restart');
         return 'OK';
     }
 

@@ -2,6 +2,9 @@
 <html class="no-js" lang="">
 
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Dashboard One | Notika - Notika Admin Template</title>

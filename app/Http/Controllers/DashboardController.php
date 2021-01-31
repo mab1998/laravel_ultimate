@@ -116,6 +116,7 @@ class DashboardController extends Controller
                 'legend' => ['display' => false]
             ]);
 
+        return app_config('Timezone');
 
         //For SMS History Chart
         $day_10 = get_date_format(Carbon::now(app_config('Timezone'))->subDays(9));

@@ -20,6 +20,8 @@
         "laravelcollective/remote": "^6.1",
         "paypal/rest-api-sdk-php": "^1.14",
         "phpseclib/phpseclib": "^2.0",
+        "pusher/pusher-php-server": "~4.0",
+        "rachidlaasri/laravel-installer": "^4.1",
         "shamim/laravel-installer": "^1.0",
         "unicodeveloper/laravel-paystack": "^1.0",
         "yajra/laravel-datatables-oracle": "^9.10"

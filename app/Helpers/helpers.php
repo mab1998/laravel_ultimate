@@ -18,12 +18,14 @@ function check_if_exist($DomainName)
 }
 function app_config($value = '')
 {
+	return $value;
     $conf = AppConfig::where('setting', '=', $value)->first();
     return $conf->value;
 }
 
 function language_data($value = '', $lan_id = null)
 {
+	return $value;
     if ($lan_id === null) {
         $lan_id = app_config('Language');
     }

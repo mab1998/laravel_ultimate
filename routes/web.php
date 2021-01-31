@@ -14,9 +14,17 @@
 // Client Login
 //======================================================================
 Route::get('/', 'AuthController@clientLogin');
+Route::get('/1', 'AuthController2@clientLogin');
+
 Route::post('client/get-login', 'AuthController@clientGetLogin');
+Route::post('client/get-login1', 'AuthController2@clientGetLogin');
+
 Route::get('signup', 'AuthController@clientSignUp');
+Route::get('signup1', 'AuthController2@clientSignUp');
+
 Route::post('user/post-registration', 'AuthController@postUserRegistration');
+Route::post('user/post-registration1', 'AuthController2@postUserRegistration');
+
 Route::get('user/registration-verification', 'AuthController@clientRegistrationVerification');
 Route::post('user/post-verification-token', 'AuthController@postVerificationToken');
 Route::get('verify-user/{token}', 'AuthController@verifyUserAccount');
@@ -67,6 +75,21 @@ Route::get('ssh', 'DomainController@ssh');
 Route::get('server', 'ServersController@index');
 Route::get('server-create', 'ServersController@CreatNewServer');
 Route::post('server-create', 'ServersController@CreatNewServer_Post');
+
+//======================================================================
+// Pusher
+//======================================================================
+Route::get('test', function () {
+    // event(new App\Events\StatusLiked('bbbbbbbbbb'));
+    event(new App\Events\StatusLiked('Hello Mabouk bbbbbb'));
+    return "Event has been sent!";
+});
+Route::post('message', 'BroadcastController@SendMessage');
+
+
+Route::get('demo', function () {
+    return view('pusher');
+});
 
 
 

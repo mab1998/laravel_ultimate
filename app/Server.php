@@ -6,20 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Server extends Model
 {
+    protected $table='servers';
+
     protected $fillable = [
         'id',
         'name',
-        'provider',
-        'location',
         'ip',
-        'port',
         'username',
         'password',
-        'dbroot',
-        'status',
-        'servercode',
+        'status'
     ];
 
-    public function applications() {
-    	return $this->hasMany(Application::class);
-    }}
+
+}

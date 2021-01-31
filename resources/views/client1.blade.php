@@ -2,6 +2,9 @@
 <html class="no-js" lang="">
 
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Dashboard One | Notika - Notika Admin Template</title>
@@ -460,7 +463,7 @@
                         </div>
                         <div id="recharge" class="tab-pane @if(Request::path()== 'user/sms/purchase-sms-plan1' OR Request::path()== 'user/sms/post-purchase-sms-plan' OR Request::path()=='user/sms/sms-plan-feature/'.view_id() OR Request::path()== 'user/sms/buy-unit') in active @endif notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
-                                <li><a href="user/sms/purchase-sms-plan1">Purchase Plan</a>
+                                <li><a href="/user/sms/purchase-sms-plan1">Purchase Plan</a>
                                 </li>
                                 {{-- <li><a href="google-map.html">Buy Unit</a>
                                 </li> --}}
